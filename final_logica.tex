@@ -4,7 +4,6 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}%
 \usepackage{amsthm}
-\usepackage[mathscr]{euscript}
 \usepackage{titlesec}
 \usepackage{amsmath}
 \usepackage{charter}
@@ -23,7 +22,6 @@
 \newtheorem{cor}[thm]{Corolario}
 
 \theoremstyle{definition}
-\newtheorem{defi}[thm]{Definición}
 \newtheorem*{ex}{Ejemplo}
 \newtheorem*{exs}{Ejemplos}
 \newtheorem*{thmx}{Teorema}
@@ -51,12 +49,15 @@
 \newcommand{\TeoN}[0]{\mbox{Teo}(\mathcal{N})}
 \newcommand{\ARITH}[0]{\mathcal{N}}
 \newcommand{\MODEL}[0]{\mathscr{M}}
+\newcommand{\TOT}[0]{\bm{TOT}}
+\newcommand{\NTOT}[0]{\bm{\bar{TOT}}}
+
 
 \newcounter{excounter}
 
-\newenvironment{solution}[0]{\textbf{Solución:}  \begin{adjustwidth}{1.5em}{1.5em}}{\end{adjustwidth}}
-\newenvironment{teo}[1]{\refstepcounter{thm}\noindent\textbf{Teorema~\thethm \,  (#1):} }{}
-\newenvironment{dem}[0]{\refstepcounter{thm}\noindent\textbf{Demostración:} }{}
+\newenvironment{solucion}[0]{\begin{adjustwidth}{1.5em}{1.5em}}{\end{adjustwidth}}\newenvironment{teo}[1]{\refstepcounter{thm}\noindent\textbf{Teorema~\thethm \,  (#1):} }{}
+\newenvironment{dem}[0]{\noindent\textbf{Demostración:}}{}
+\newenvironment{defi}[0]{\refstepcounter{thm}\noindent\textbf{Definición:}}{}
 
 \newtcolorbox{exbox}[0]{
                 colback=white!80!gray,
@@ -113,7 +114,7 @@
     \end{enumerate}
 \end{ej}
 
-\begin{solution}
+\begin{solucion}
 \textbf{1.} Sea $\class{C}$ una clase de funciónes parciales computables. Entonces el conjunto de índices $A$ se define como
 \[
 	A = \set{x}{\phi_{x} \in \class{C}}
@@ -155,12 +156,14 @@ Notar que si $x \neq y$, $x \in A\,$ y $\,\phi_{x} = \phi_{y}$ entonces $y \in A
 	\noindent Llegamos a una contradicción que vino de suponer que $A$ era computable.
 
 \end{dem}
-\end{solution}
+\end{solucion}
 
 \begin{ej}{5}
     Demostrar que una función es $p.r.$ si y solo si pertenece a toda clase
     $\PRC$
 \end{ej}
+
+\begin{solucion}
 
 \begin{defi} Una función es primitiva recursiva (p.r.) si se puede obtener a partir de las funciones iniciales por un número finito de aplicaciones de composición y recursión primitiva.
 \end{defi}
@@ -174,20 +177,31 @@ $\Rightarrow)$ Sea $\class{C}$ una clase $\PRC$, como $f$ p.r. hay una lista
 
 \noindent $\Leftarrow)$ Las funciones p.r. son una clase $\PRC$ en particular si $f$ pertenece a toda clase $\PRC$ tiene que pertenecer a la clase de las funciones p.r., osea que $f$ es p.r.
 \end{dem}
-
+\end{solucion}
 
 \begin{ej}{4}
     Probar que $\bm{TOT}$ no es $c.e.$ ni $co-c.e.$
 \end{ej}
 
+\begin{solucion}
+
+$\TOT$ no c.e.: Supongamos que $\TOT$ es c.e., entonces existe una función parcial computable total $f$ cuyo rango es $\TOT$. Existe $e$ tal que $\phi_{e}(x) = \phi_{f(x)}(x) + 1$. Pero entonces $e$ es total por que existe un $k \in \naturals$ tal que $f(k) = e$, entonces
+\[ \phi_{e}(x) = \phi_{f(k)}(x) = \phi_{f(x)}(x) + 1 \] 
+
+\noindent Si tomamos $x = k$ llegamos a una contradicción, vino de suponer que $\TOT$ es c.e. 
+
+\end{solucion}
+
 \begin{ej}{3}
     Enunciar el halting problem y demostrar que $\HALT{x}{y}$ no es computable.
 \end{ej}
 
-
-\noindent Definimos $\func{\HALT{x}{y}}{\naturals^2}{\{0, 1\}} $ como la función que devuelve verdadero si el programa $x$ con entrada $y$ no se indefine:
+\begin{solucion}
+\noindent $\func{\HALT{x}{y}}{\naturals^2}{\{0, 1\}} $ es la funcion que devuelve verdadero si el programa $x$ con entrada $y$ no se indefine:
 
 	\[ \HALT{x}{y} = \twopartdef{1}{\psi_{P}(x) \downarrow}{0}{\mbox{si no.}}\]
+
+\noindent El halting problem resulta de saber si esta función es o no computable.
 
 \begin{thm} $\HALT{x}{y}$ no es computable.
 \end{thm}
@@ -201,12 +215,14 @@ $\Rightarrow)$ Sea $\class{C}$ una clase $\PRC$, como $f$ p.r. hay una lista
 
 	\noindent pues $c$ es total. Si tomamos $x = e$ llegamos a una contradicción, vino de suponer que $\HALT{x}{y}$ es computable.
 \end{dem}
-
+\end{solucion}
 
 \begin{ej}{2}
     $\ba \subseteq \naturals$ es computable $\sii$ $\ba$ y $\bar{\ba}$ son
     computablemente enumerables.
 \end{ej}
+
+\begin{solucion}
 
 \begin{dem}
 $\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal que
@@ -222,6 +238,8 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal qu
 \end{dem}
 
 \noindent Esta función, a pesar de tener una minimización no acotada es total y devuelve true si la aparición de $x$ esta en $\ba$.
+\end{solucion}
+
 \begin{ej}{2}
     Enunciar y demostrar el teorema de la recursión.
 
@@ -230,8 +248,21 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal qu
 
 \begin{ej}{1}
     Demostrar que si $\bm{A}$ es $c.e.$ y $\bm{A} \neq \emptyset$, entonces
-    $\bm{A}$ es el rango de una función parcial computable.
+    $\bm{A}$ es el rango de una función p.r.
 \end{ej}
+
+\begin{solucion}
+	Como $A$ es c.e. por definición $A = \set{x}{ g(x) \downarrow}$ donde $\func{g}{\naturals}{\naturals}$ es una función parcial computable, además como $A$ no es vacio por lo menos tiene un elemento $k$. Sea $e$ tal que $\phi_{e} = g$, entonces podemos definir la siguiente funcion, 
+	\[ f(\langle x, t \rangle) = \twopartdef{x}{\mbox{STP}(\phi_e, t) = 1}{k}{\mbox{si no.}} \]
+\noindent $\func{f}{\naturals}{\naturals}$ es computable (total) y además $f(\naturals) = A$, ya que si $x \in A$ entonces $\phi_e(x) \downarrow$ en algún paso $t$ de la ejecución y por lo tanto $f(\langle x, t \rangle) = x$.
+
+\noindent Queda ver que $f$ es p.r., pero podemos expresar a $f$ como la composición de funciones p.r.
+\[ f(\langle x, t \rangle) = x \, \mbox{STP}(\phi_e, t) \, + \, k \, \alpha(\mbox{STP}(\phi_e, t)) \]
+\noindent ya que la suma, STP, $\alpha$ y los observadores de tuplas son p.r. Recordamos que $\alpha$ es:
+	
+	\[ \alpha(x) = \twopartdef{1}{x = 0.}{0}{\mbox{si } x \neq 0.}\] 
+	
+\end{solucion}
 
 \begin{ej}{1}
     Probar que $\ba \subseteq \mathbb{N}$ es $c.e.$ si y solo si es imagen de
@@ -252,8 +283,70 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal qu
     Exhibir una función computable que no sea $p.r.$ y demostrarlo.
 \end{ej}
 
+\begin{ej}{1}
+    Enunciar y demostrar el Teorema de punto fijo.
+\end{ej}
 
-\section*{Lógica}
+
+\section*{Lógica Proposicional}
+
+\begin{ej}{5}
+    Usando el teorema de correctitud de la lógica proposicional, probar que
+    $\bm{\Gamma}$ es un conjunto de fórmulas satisfacible entonces es
+    consistente.
+\end{ej}
+
+\begin{ej}{4}
+    \begin{enumerate}
+    \item Definir consistente, maximal consistente.
+    \item Enunciar y demostrar el teorema de Lindenbaum para lógica proposicional.
+    \end{enumerate}
+\end{ej}
+
+\begin{solucion}
+\textbf{1.} Un conjunto $\bm{\Gamma}$ es maximal consistente si: es consistente y para toda formula $\varphi$ tenemos que
+\begin{enumerate}
+	\item $\varphi \in \bm\Gamma$ ó
+	\item Existe un $\psi$ tal que $\bm{\Gamma} \cup \{\varphi\} \vdash \psi$  y $\bm{\Gamma} \cup \{\varphi\} \vdash \lnot\psi$ entonces
+\end{enumerate}
+
+\begin{thm}[Lema de Lindenbaum] Si $\bm{\Gamma} \subseteq \FORM$ entonces existe un $\bm{\Gamma'}$ m.c. tal que $\bm{\Gamma} \subseteq \bm{\Gamma'}$
+\end{thm}
+
+\noindent Queremos expandir $\bgamma$ de manera que sea maximal y no deje de ser consistente. Consideremos entonces una numeración de todas las fórmulas $\varphi_1, \varphi_2, \cdots$ y definimos los siguientes conjuntos
+
+\begin{itemize}
+\renewcommand\labelitemi{$\sim$}
+\item $\bgamma_0 = \bgamma$
+\item $\bgamma_{n+1} = 
+	\twopartdef{\bgamma_n \cup \{\varphi_{n + 1}\}}{\bgamma_n \cup \{\varphi_{n + 1}\} \mbox{es consistente.}}
+			   {\bgamma_n}{\mbox{si no.}}$
+\item $\bgamma' = \bigcup\limits_{k \geq 0} \bgamma_k$
+\end{itemize}
+
+\noindent Entonces afirmamos que $\bgamma'$ es m.c.
+
+\noindent \textbf{Consistencia:} Supongamos que no lo es, entonces hay una formula $\psi$ tal que 
+\[\bgamma \vdash \psi \mbox{ \, y \, } \bgamma \vdash \lnot \psi\]
+
+\noindent Pero esto significa que en sus derivaciones hay un número finito de fórmulas
+\[\{\gamma_1, \gamma_2, \cdots, \gamma_n\} \subseteq \bgamma'\]
+\noindent Por lo tanto hay un $k$ lo suficientemente grande tal que 
+\[\{\gamma_1, \gamma_2, \cdots, \gamma_n\} \subseteq \bgamma_k\]
+pero entonces $\bgamma_k$ tampoco es consistente, lo cual contradice nuestra construcción.\\
+ 
+\noindent\textbf{Maximal:} La maximalidad significa que dada una fórmula $\varphi$ o bien $\varphi \in \bgamma'$ ó si se la agregamos a $\bgamma'$ se hace inconsistente. \\ 
+\noindent Entonces supongamos que $\varphi \not\in \bgamma'$. Tenemos que $\varphi$ debe aparecer en la numeración que hicimos sobre todas las fórmulas, por ejemplo en $\varphi_n$, pero entonces deberíamos haberla agregado en $\bgamma_n$, de lo cual tenemos que $\varphi_n \not\in \bgamma_n$ por lo tanto $\bgamma_{n - 1} \cup \varphi_n$ es inconsistente, de lo cual tenemos que $\bgamma' \cup \varphi_n$ es inconsistente.
+
+\end{solucion}
+
+
+\begin{ej}{1}
+    Definir maximal consistente y demostrar que $\varphi$ es teorema de
+    $\bgamma$ sii $\varphi \in \bgamma$.
+\end{ej}
+
+\section*{Lógica de primer orden}
 
 \begin{ej}{8}
     Sea $\bm{\mathcal{L}} = \{0, S, <, +, *\}$ con igualdad y sea
@@ -280,7 +373,7 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal qu
     un elemento inalcanzable.
 \end{ej}
 
-\begin{solution}
+\begin{solucion}
 \begin{dem}
 	Lo vamos a demostrar para un elemento inalcanzable aunque se podría hacer para la no igualdad (Ejemplo en el libro de metalógica). Sea
 	 \[\TeoN = \set{\varphi \in \FORM}{ \varphi \mbox{ es sentencia y } \ARITH \models \varphi}\]
@@ -301,42 +394,14 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal qu
 \noindent Pero $\ARITH$ y $\MODEL'$ no son isomorfos ya que $c^{\MODEL}$ es un elemento inalcanzable en $\MODEL'$ es decir obtuvimos un modelo no estandar de la aritmética.
 
 \end{dem}
-\end{solution}
+\end{solucion}
 
-\begin{solution}
+\begin{solucion}
 
-Una solución alternativa corta, como un modelo estandar de la aritmética tiene un modelo infinito, por Löwenheim-Skolem tiene modelos de cardinalidad arbitraria ($\geq \aleph_0$) entonces un modelo no numerable de los naturales no puede ser estandar.
+\textbf{Solución alternativa} (para alguno de los anteriores):
+como un modelo estandar de la aritmética tiene un modelo infinito, por Löwenheim-Skolem tiene modelos de cardinalidad arbitraria ($\geq \aleph_0$) entonces un modelo no numerable de los naturales no puede ser estandar.
 
-\end{solution}
-
-\begin{ej}{5}
-    Usando el teorema de correctitud de la lógica proposicional, probar que
-    $\bm{\Gamma}$ es un conjunto de fórmulas satisfacible entonces es
-    consistente.
-\end{ej}
-
-\begin{ej}{4}
-    \begin{enumerate}
-    \item Definir consistente, maximal consistente.
-    \item Enunciar y demostrar el teorema de Lindenbaum para lógica proposicional.
-    \end{enumerate}
-\end{ej}
-
-\begin{solution}
-\textbf{1.} Un conjunto $\bm{\Gamma}$ es maximal consistente si: es consistente y para toda formula $\varphi$ tenemos que
-\begin{enumerate}
-	\item $\varphi \in \bm\Gamma$ ó
-	\item Existe un $\psi$ tal que $\bm{\Gamma} \cup \{\varphi\} \vdash \psi$  y $\bm{\Gamma} \cup \{\varphi\} \vdash \lnot\psi$ entonces
-\end{enumerate}
-
-\begin{thm}[Lema de Lindenbaum] Si $\bm{\Gamma} \subseteq \FORM$ entonces existe un $\bm{\Gamma'}$ m.c. tal que $\bm{\Gamma} \subseteq \bm{\Gamma'}$
-\end{thm}
-
-\begin{dem}
-
-\end{dem}
-
-\end{solution}
+\end{solucion}
 
 \begin{ej}{3}
     Demostrar que si $\bm{\Gamma}$ es un conjunto de fórmulas de logica proposicional
@@ -405,15 +470,6 @@ Una solución alternativa corta, como un modelo estandar de la aritmética tiene
     \end{enumerate}
 \end{ej}
 
-\begin{ej}{1}
-    Enunciar y demostrar el Teorema de punto fijo.
-\end{ej}
-
-
-\begin{ej}{1}
-    Definir maximal consistence y demostrar que $\varphi$ es teorema de
-    $\bgamma$ sii $\varphi \in \bgamma$.
-\end{ej}
 
 \begin{ej}{1}
    Enumerar (y explicar brevemente) los pasos de la demostración de completitud
