@@ -15,13 +15,12 @@
 \usepackage{bm}
 \usepackage{enumitem}
 \usepackage[strict]{changepage}
+\usepackage[most]{tcolorbox}
 
 \theoremstyle{plain}
 \newtheorem{thm}{Teorema}[chapter]
 \newtheorem{lem}[thm]{Lema}
 \newtheorem{cor}[thm]{Corolario}
-\newtheorem*{dem}{Demostración}
-\newtheorem{ej}{}
 
 \theoremstyle{definition}
 \newtheorem{defi}[thm]{Definición}
@@ -53,8 +52,19 @@
 \newcommand{\ARITH}[0]{\mathcal{N}}
 \newcommand{\MODEL}[0]{\mathscr{M}}
 
+\newcounter{excounter}
 
-\newenvironment{solution}[0]{\begin{adjustwidth}{1.5em}{1.5em}}{\end{adjustwidth}}
+\newenvironment{solution}[0]{\textbf{Solución:}  \begin{adjustwidth}{1.5em}{1.5em}}{\end{adjustwidth}}
+\newenvironment{teo}[1]{\refstepcounter{thm}\noindent\textbf{Teorema~\thethm \,  (#1):} }{}
+\newenvironment{dem}[0]{\refstepcounter{thm}\noindent\textbf{Demostración:} }{}
+
+\newtcolorbox{exbox}[0]{
+                colback=white!80!gray,
+				colframe=white}
+			
+\newenvironment{ej}[1]{\noindent\stepcounter{excounter} \begin{exbox}\textbf{\arabic{excounter}} (#1).}{\end{exbox}}
+	
+%\newtheorem{ej}{}
 
 \newcommand{\twopartdef}[4]
 {
@@ -81,6 +91,8 @@
   {\begin{framed}}
   {\end{framed}}
 
+
+
 \titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\Huge}
 \frenchspacing
 
@@ -92,7 +104,7 @@
 \maketitle
 \section*{Computabilidad}
 
-\begin{ej}[13]
+\begin{ej}{13}
     Resolver los siguientes puntos:
     \begin{enumerate}
         \item Definir un conjunto de índices.
@@ -102,50 +114,50 @@
 \end{ej}
 
 \begin{solution}
-\textbf{1.} Sea $\class{C}$ una clase de funciónes parciales computables. Entonces el conjunto de índices $A$ se define como 
+\textbf{1.} Sea $\class{C}$ una clase de funciónes parciales computables. Entonces el conjunto de índices $A$ se define como
 \[
 	A = \set{x}{\phi_{x} \in \class{C}}
 \]
-Notar que si $x \neq y$, $x \in A\,$ y $\,\phi_{x} = \phi_{y}$ entonces $y \in A$.  
+Notar que si $x \neq y$, $x \in A\,$ y $\,\phi_{x} = \phi_{y}$ entonces $y \in A$.
 
-\noindent\textbf{2.} 
+\noindent\textbf{2.}
 
-\begin{thm}[Rice]Sea $A$ un conjunto de índices, entonces si $A \neq \emptyset$ ó $A \neq \naturals$ entonces $A$ no es computable. Es decir si $A$ no es un conjunto trivial entonces no es computable.
-\end{thm}
+\begin{teo}{Rice}Sea $A$ un conjunto de índices, entonces si $A \neq \emptyset$ ó $A \neq \naturals$ entonces $A$ no es computable. Es decir si $A$ no es un conjunto trivial entonces no es computable.
+\end{teo}
 
 \begin{dem}
 	Supongamos que $A$ es computable, esto significa que tenemos una función $h$ computable que computa la pertenencia en $A$.
-	
+
 	\[
 	h(x) = \twopartdef{1}{x \in A.}
 					  {0}{\mbox{si no.}}
 	\]
-	
+
 	\noindent Además como $A$ no es trivial por lo menos existen dos funciones $f \in \class{C}$ y $g \not\in \class{C}$ computables.
-	
-	\noindent Entonces definimos $d$ como 
-	
+
+	\noindent Entonces definimos $d$ como
+
 	\[
 		d(t, x) = \twopartdef{g(x)}{h(t).}
 							 {f(x)}{\mbox{si no.}}
 	\]
-	
-	\noindent Esta función también es computable y por el teorema de la recursión existe $e \in \naturals$ tal que 
-	\[ 
+
+	\noindent Esta función también es computable y por el teorema de la recursión existe $e \in \naturals$ tal que
+	\[
 	\phi_{e}(x) = d(e, x)
 	\]
-	
+
 	\noindent Pero entonces tenemos que:
-	
+
 	\[ e \in A \implies \phi_{e}(x) = g(x) \implies \phi_{e}(x) \not\in \class{C} \implies e \not\in A\]
 	\[ e \not\in A \implies \phi_{e}(x) = f(x) \implies \phi_{e}(x) \in \class{C} \implies e \in A\]
-	
+
 	\noindent Llegamos a una contradicción que vino de suponer que $A$ era computable.
 
 \end{dem}
 \end{solution}
 
-\begin{ej}[5]
+\begin{ej}{5}
     Demostrar que una función es $p.r.$ si y solo si pertenece a toda clase
     $\PRC$
 \end{ej}
@@ -156,94 +168,94 @@ Notar que si $x \neq y$, $x \in A\,$ y $\,\phi_{x} = \phi_{y}$ entonces $y \in A
 \begin{dem}
 $\Rightarrow)$ Sea $\class{C}$ una clase $\PRC$, como $f$ p.r. hay una lista
 
-	\[ f_1, f_2, \cdots, f_n \] 
-	
-	TODO(Inducción) 
-	
+	\[ f_1, f_2, \cdots, f_n \]
+
+	TODO(Inducción)
+
 \noindent $\Leftarrow)$ Las funciones p.r. son una clase $\PRC$ en particular si $f$ pertenece a toda clase $\PRC$ tiene que pertenecer a la clase de las funciones p.r., osea que $f$ es p.r.
 \end{dem}
 
 
-\begin{ej}[4]
+\begin{ej}{4}
     Probar que $\bm{TOT}$ no es $c.e.$ ni $co-c.e.$
 \end{ej}
 
-\begin{ej}[3]
+\begin{ej}{3}
     Enunciar el halting problem y demostrar que $\HALT{x}{y}$ no es computable.
 \end{ej}
 
 
 \noindent Definimos $\func{\HALT{x}{y}}{\naturals^2}{\{0, 1\}} $ como la función que devuelve verdadero si el programa $x$ con entrada $y$ no se indefine:
-	
+
 	\[ \HALT{x}{y} = \twopartdef{1}{\psi_{P}(x) \downarrow}{0}{\mbox{si no.}}\]
-	
+
 \begin{thm} $\HALT{x}{y}$ no es computable.
 \end{thm}
 \begin{dem}
 	Supongamos que lo es, entonces definimos la siguiente funcion $c$
-	
+
 	\[ c(x) = \twopartdef{\phi_x{(x)} + 1}{\HALT{x}{x}}{0}{\mbox{si no.}} \]
-	
+
 	\noindent Como $\HALT{x}{y}$ es computable entonces $c$ es computable y total, osea que $c(x) \downarrow$ para cualquier input. Además por universalidad existe un $e$ tal que $c(x) = \phi_{e}(x)$, tenemos que
 	\[ \phi_{e}(x) = c(x) = \phi_{x}(x) + 1 \]
-	
+
 	\noindent pues $c$ es total. Si tomamos $x = e$ llegamos a una contradicción, vino de suponer que $\HALT{x}{y}$ es computable.
 \end{dem}
 
 
-\begin{ej}[2]
+\begin{ej}{2}
     $\ba \subseteq \naturals$ es computable $\sii$ $\ba$ y $\bar{\ba}$ son
     computablemente enumerables.
 \end{ej}
 
 \begin{dem}
-$\Rightarrow)$	Si $\ba$ es computable existe $c$ tal que 
+$\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal que
 		\[ c(x) = \twopartdef{1}{x \in \ba}{0}{\mbox{si no.}} \]
-		
-		\noindent Podemos además suponer que $\ba$ no es trivial ($\emptyset$ ó $\naturals$), entonces tomamos un elemento $k \in \ba$ y definimos		
+
+		\noindent Podemos además suponer que $\ba$ no es trivial ($\emptyset$ ó $\naturals$), entonces tomamos un elemento $k \in \ba$ y definimos
 		\[ f(x) = \twopartdef{x}{c(x)}{k}{\mbox{si no.}} \]
-		
+
 	\noindent Como $c$ era computable $f$ es computable y además $f(\naturals) = \ba$. De la misma manera podemos construir $g$ tal que $g(\naturals) = \bar{\ba}$\\
-	
+
 	\noindent $\Leftarrow)$ Si $\ba$ y $\bar{\ba}$ son c.e. significa que tenemos $f$ y $g$ funciones computables tal que $f(\naturals) = \ba$ y $g(\naturals) = \bar{\ba}$, queremos una función que nos devuelva verdadero si un elemento pertenece a $\ba$, pero entonces es cuestion de probar si hay un $k \in \naturals$ tal que este en la imagen de $f$, no podemos loopear indefinidamente a riesgo de indefinirnos, por lo que hay que probar un elemento a la vez en $f$ y $g$, podemos definir entonces la siguiente función:
 	\[ c(x) = \twopartdef{1}{f(\min\limits_{y}(f(y) = x \lor g(y) = x) = x}{0}{\mbox{si no.}} \]
 \end{dem}
 
-\noindent Esta función, a pesar de tener una minimización no acotada es total y se fija si la aparición de $x$ esta en $\ba$ ó $\bar\ba$.
-\begin{ej}[2]
+\noindent Esta función, a pesar de tener una minimización no acotada es total y devuelve true si la aparición de $x$ esta en $\ba$.
+\begin{ej}{2}
     Enunciar y demostrar el teorema de la recursión.
 
     Variacion: demuéstrelo usando el teorema del parámetro.
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     Demostrar que si $\bm{A}$ es $c.e.$ y $\bm{A} \neq \emptyset$, entonces
     $\bm{A}$ es el rango de una función parcial computable.
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     Probar que $\ba \subseteq \mathbb{N}$ es $c.e.$ si y solo si es imagen de
     una función $p.r.$
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     La clase de funciones computables es una clase $\bm{PRC}$
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     Probar que si $\ba$ y $\bm{B}$ son $c.e.$ entonces también lo son $\ba \cup
     \bm{B}$ y $\ba \cap \bm{B}$.
 \end{ej}
 
 
-\begin{ej}[1]
+\begin{ej}{1}
     Exhibir una función computable que no sea $p.r.$ y demostrarlo.
 \end{ej}
 
 
 \section*{Lógica}
 
-\begin{ej}[8]
+\begin{ej}{8}
     Sea $\bm{\mathcal{L}} = \{0, S, <, +, *\}$ con igualdad y sea
     $\bm{\mathcal{N}} = \{\mathbb{N},
     0, S, <, +, *\}$ la $\bm{\mathcal{L}}$-estructura de primer orden con la
@@ -254,31 +266,31 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ tal que
 
 \noindent Variaciones del ejercicio anterior:
 
-\begin{ej}[1]
+\begin{ej}{1}
     Demostrar que existen modelos de primer orden no estandard para la
     aritmética.
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     Mostrar que existe un modelo no estandard de la aritmética.
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     Demostrar que existen modelos no estándard de la aritmética en los que hay
     un elemento inalcanzable.
 \end{ej}
 
 \begin{solution}
 \begin{dem}
-	Vamos a demostrar para un elemento inalcanzable aunque se podría hacer para la no igualdad (Ejemplo en el libro de metalogica). Sea
+	Lo vamos a demostrar para un elemento inalcanzable aunque se podría hacer para la no igualdad (Ejemplo en el libro de metalógica). Sea
 	 \[\TeoN = \set{\varphi \in \FORM}{ \varphi \mbox{ es sentencia y } \ARITH \models \varphi}\]
-\noindent Entonces expandamos el lenguaje con una nueva constante $c$ y los siguientes axiomas 
+\noindent Entonces expandamos el lenguaje con una nueva constante $c$ y los siguientes axiomas
  \[ \bm{\Gamma} = \{ 0 < c, S(0) < c, S(S(0)) < c, \dots \} \]
- 
+
 \noindent Cada subconjunto finito de $\bm{\Gamma} \cup \TeoN$ tiene un modelo, ya que tenemos finitos axiomas de $\Gamma$ y por lo tanto existe un $c \in \naturals$ que cumple la condición.\\
 \noindent Además por compacidad $\TeoN \cup \bm{\Gamma}$ tiene modelo. \\
 \noindent Y por Löwenheim-Skolem tiene un modelo contable.
-	
+
 	\[ \MODEL = \langle M, 0^{\MODEL}, S^{\MODEL}, <^{\MODEL}, +^{\MODEL}, *^{\MODEL}, c^{\MODEL} \rangle \]
 
 \noindent entonces tomemos $\MODEL'$ la restricción de $\MODEL$ al lenguaje original $\mathcal{L}$ de lo cual vemos que $\ARITH \models \varphi \iff \MODEL' $
@@ -291,13 +303,19 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ tal que
 \end{dem}
 \end{solution}
 
-\begin{ej}[5]
+\begin{solution}
+
+Una solución alternativa corta, como un modelo estandar de la aritmética tiene un modelo infinito, por Löwenheim-Skolem tiene modelos de cardinalidad arbitraria ($\geq \aleph_0$) entonces un modelo no numerable de los naturales no puede ser estandar.
+
+\end{solution}
+
+\begin{ej}{5}
     Usando el teorema de correctitud de la lógica proposicional, probar que
     $\bm{\Gamma}$ es un conjunto de fórmulas satisfacible entonces es
     consistente.
 \end{ej}
 
-\begin{ej}[4]
+\begin{ej}{4}
     \begin{enumerate}
     \item Definir consistente, maximal consistente.
     \item Enunciar y demostrar el teorema de Lindenbaum para lógica proposicional.
@@ -306,7 +324,7 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ tal que
 
 \begin{solution}
 \textbf{1.} Un conjunto $\bm{\Gamma}$ es maximal consistente si: es consistente y para toda formula $\varphi$ tenemos que
-\begin{enumerate} 
+\begin{enumerate}
 	\item $\varphi \in \bm\Gamma$ ó
 	\item Existe un $\psi$ tal que $\bm{\Gamma} \cup \{\varphi\} \vdash \psi$  y $\bm{\Gamma} \cup \{\varphi\} \vdash \lnot\psi$ entonces
 \end{enumerate}
@@ -320,17 +338,17 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ tal que
 
 \end{solution}
 
-\begin{ej}[3]
+\begin{ej}{3}
     Demostrar que si $\bm{\Gamma}$ es un conjunto de fórmulas de logica proposicional
     tal que $\bm{\Gamma \subseteq FORM}$ es consistente entonces $\bm{\Gamma}$ es
     satisfacible.
 \end{ej}
 
-\begin{ej}[2]
+\begin{ej}{2}
     Enunciar y demostrar el teorema de la deducción.
 \end{ej}
 
-\begin{ej}[2]
+\begin{ej}{2}
     Dado $\bm{L}$ un lenguaje de primer oden con igualdad. Decidir si las
     siguientes afirmaciones son verdaderas o falsas.
 
@@ -345,12 +363,12 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ tal que
 \end{ej}
 
 
-\begin{ej}[2]
+\begin{ej}{2}
     Probar que si una teoría de primer orden con igualdad tiene modelos
     arbitrariamente grandes, entonces tiene modelos infinitos.
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     Sea $\bm{R}$ un conjunto $m.c.$:
     \begin{enumerate}
         \item Probar que $\alpha$ pertence a $\bm{R}$ si y solo si $\bm{R}$
@@ -361,7 +379,7 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ tal que
     \end{enumerate}
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     Definir conjunto maximal consistence. \\
     Probar que si $\bgamma$ es maximal consistente entonces:
     \begin{enumerate}
@@ -372,13 +390,13 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ tal que
 
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     $\bgamma \union \{ \lnot\varphi \}$ es inconsistente $\sii \varphi$ es
     consecuencia sintátctica de $\bgamma$. (En lógica proposicional) (Dem: Galerazo,
     teorema de SP, se puede usar o alguno equivalente)
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     \begin{enumerate}
     \item Dar un conjunto de fórmulas $\bgamma$ tal que $\bgamma$ es valida $\sii$ el
     modelo que satisface es infinito.
@@ -387,32 +405,32 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ tal que
     \end{enumerate}
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     Enunciar y demostrar el Teorema de punto fijo.
 \end{ej}
 
 
-\begin{ej}[1]
+\begin{ej}{1}
     Definir maximal consistence y demostrar que $\varphi$ es teorema de
     $\bgamma$ sii $\varphi \in \bgamma$.
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
    Enumerar (y explicar brevemente) los pasos de la demostración de completitud
     en primer orden y mostrar el modelo canónico utilizado en la Demostración.
 \end{ej}
 
 
-\begin{ej}[1]
+\begin{ej}{1}
     Verdadero o Falso: $\bm{M} \models \varphi \sii \bm{M}$ es infinito.
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     Demostrar que $\lnot\exists\varphi$ tal que es verdadera $\sii$ tiene modelo
     finito.
 \end{ej}
 
-\begin{ej}[1]
+\begin{ej}{1}
     Sea $\mathcal{L} = \{c, f\}$ un lenguaje de primer orden con igualdad donde
     $c$ es un símbolo de constante y $f$ un símbolo de función unaria.
     \begin{enumerate}
