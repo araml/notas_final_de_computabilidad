@@ -15,6 +15,7 @@
 \usepackage{enumitem}
 \usepackage[strict]{changepage}
 \usepackage[most]{tcolorbox}
+\usepackage{multicol}
 
 \theoremstyle{plain}
 \newtheorem{thm}{Teorema}[chapter]
@@ -35,9 +36,11 @@
 \newcommand{\prob}[1][\mathbb]{#1}
 \newcommand{\dist}[1][\mathcal]{#1}
 \newcommand{\cond}[2]{\{ #1 \, | \, #2 \}}
-\newcommand{\set}[2]{\{ #1 \, : \, #2 \}}
+\newcommand{\set}[2]{\{ #1  \mid  #2 \}}
+\newcommand{\pset}[1]{\{ #1 \}}
 \newcommand{\bgamma}[0]{\bm{\Gamma}}
 \newcommand{\ba}[0]{\bm{A}}
+\newcommand{\bb}[0]{\bm{B}}
 \newcommand{\FORM}[0]{\bm{FORM}}
 \newcommand{\naturals}[0]{\mathbb{N}}
 \newcommand{\sii}[0]{\Longleftrightarrow}
@@ -50,12 +53,14 @@
 \newcommand{\ARITH}[0]{\mathcal{N}}
 \newcommand{\MODEL}[0]{\mathscr{M}}
 \newcommand{\TOT}[0]{\bm{TOT}}
-\newcommand{\NTOT}[0]{\bm{\bar{TOT}}}
-
+\newcommand{\STP}[0]{\mbox{STP}}
+\newcommand{\NTOT}[0]{\bm{\overline{TOT}}}
+\newcommand{\dom}[0]{\mbox{dom}}
 
 \newcounter{excounter}
 
-\newenvironment{solucion}[0]{\begin{adjustwidth}{1.5em}{1.5em}}{\end{adjustwidth}}\newenvironment{teo}[1]{\refstepcounter{thm}\noindent\textbf{Teorema~\thethm \,  (#1):} }{}
+\newenvironment{solucion}[0]{\begin{adjustwidth}{1.5em}{1.5em}}{\end{adjustwidth}}
+\newenvironment{teo}[1]{\refstepcounter{thm}\noindent\textbf{Teorema~\thethm  #1:} }{}
 \newenvironment{dem}[0]{\noindent\textbf{Demostración:}}{}
 \newenvironment{defi}[0]{\refstepcounter{thm}\noindent\textbf{Definición:}}{}
 
@@ -75,6 +80,16 @@
 			#3 & \mbox{} #4
 		\end{array}
 	\right.
+}
+
+\newcommand{\grab}[3]
+{
+	\left.
+		\begin{array}{ll}
+			#1 & \\
+			#2
+		\end{array}
+	\right\} \implies #3
 }
 
 \newcommand{\twopartdeftwo}[4]
@@ -123,7 +138,7 @@ Notar que si $x \neq y$, $x \in A\,$ y $\,\phi_{x} = \phi_{y}$ entonces $y \in A
 
 \noindent\textbf{2.}
 
-\begin{teo}{Rice}Sea $A$ un conjunto de índices, entonces si $A \neq \emptyset$ ó $A \neq \naturals$ entonces $A$ no es computable. Es decir si $A$ no es un conjunto trivial entonces no es computable.
+\begin{teo}{ (Rice)}Sea $A$ un conjunto de índices, entonces si $A \neq \emptyset$ ó $A \neq \naturals$ entonces $A$ no es computable. Es decir si $A$ no es un conjunto trivial entonces no es computable.
 \end{teo}
 
 \begin{dem}
@@ -188,8 +203,22 @@ $\Rightarrow)$ Sea $\class{C}$ una clase $\PRC$, como $f$ p.r. hay una lista
 $\TOT$ no c.e.: Supongamos que $\TOT$ es c.e., entonces existe una función parcial computable total $f$ cuyo rango es $\TOT$. Existe $e$ tal que $\phi_{e}(x) = \phi_{f(x)}(x) + 1$. Pero entonces $e$ es total por que existe un $k \in \naturals$ tal que $f(k) = e$, entonces
 \[ \phi_{e}(x) = \phi_{f(k)}(x) = \phi_{f(x)}(x) + 1 \] 
 
-\noindent Si tomamos $x = k$ llegamos a una contradicción, vino de suponer que $\TOT$ es c.e. 
+\noindent Si tomamos $x = k$ llegamos a una contradicción, vino de suponer que $\TOT$ es c.e. \\
 
+\noindent $\NTOT$ no es c.e.: \[\NTOT = \set{x}{\phi_x \mbox{no es total}}\]
+Supongamos que $\NTOT$ es c.e., existe un $e$ tal que $\mbox{dom}(\phi_{e}) = \NTOT$.
+Definimos el siguiente programa $P$
+\begin{align*}
+	[C] \quad & \mbox{IF STP}(x, e, t) = 1 \mbox{ GOTO E} \\
+		\quad & T \leftarrow T + 1 \\
+		\quad & \mbox{GOTO C}
+\end{align*}
+\noindent Como $\NTOT = \mbox{dom}(\phi_e)$, este programa se indefine solo si $x$ es el número de un programa total computable. En otras palabras $P$ es equivalente a
+\[ \Psi_{p}(x, y) = g(x, y) = \twopartdef{\uparrow}{\phi_x \mbox{ es total.}}
+						 				 {0}{\mbox{si no.}}\]
+\noindent Usando el teorema de la recursión hay un $e$ tal que $\phi_e(y) = g(e, y)$, pero entonces tenemos que para todo y,
+ \[ e \in \TOT \implies  \phi_e(y) \uparrow \implies e \not\in \TOT \]  
+ \[ e \not\in \TOT \implies \phi_e(y) = 0 \implies e \in\TOT \]
 \end{solucion}
 
 \begin{ej}{3}
@@ -201,10 +230,11 @@ $\TOT$ no c.e.: Supongamos que $\TOT$ es c.e., entonces existe una función parc
 
 	\[ \HALT{x}{y} = \twopartdef{1}{\psi_{P}(x) \downarrow}{0}{\mbox{si no.}}\]
 
-\noindent El halting problem resulta de saber si esta función es o no computable.
+\noindent El halting problem resulta de saber si esta función es o no computable. \\
 
-\begin{thm} $\HALT{x}{y}$ no es computable.
-\end{thm}
+\begin{teo}{} $\HALT{x}{y}$ no es computable.
+\end{teo}
+
 \begin{dem}
 	Supongamos que lo es, entonces definimos la siguiente funcion $c$
 
@@ -241,12 +271,30 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal qu
 \end{solucion}
 
 \begin{ej}{2}
-    Enunciar y demostrar el teorema de la recursión.
-
-    Variacion: demuéstrelo usando el teorema del parámetro.
+    Enunciar y demostrar el teorema de la recursión (Hint: Teorema del parámetro).
 \end{ej}
 
-\begin{ej}{1}
+\begin{solucion}
+\begin{teo}{}
+	Si $\func{g}{\naturals^{n + 1}}{\naturals}$ es parcial computable, existe un $e$ tal que
+	\[ \phi_e(x_1, \dots, x_n) = g(e, x_1, \dots, x_n)\]
+\end{teo}
+
+\begin{dem}
+	Sea $S_n^1$ la función del teorema del parametro
+	\[ \phi_{S_n^1(e, y)}(x_1, \dots, x_n) = \phi_r(x_1, \dots, x_n, e) \]
+La función \[(x_1, \dots, x_n, v) \mapsto g(S_n^1(v, v), x_1, \dots, x_n)\] 
+es parcial computable, de modo que existe $c$ tal que
+\begin{align*}
+	g(S_n^1(v, v), x_1, \dots, x_n) &= \phi_c(x_1, \dots, x_n, v)\\
+									&= \phi_{S_n^1(v, c)}(x_1, \dots, x_n) 
+\end{align*}
+$c$ está fijo, pero $v$ es variable, si elegimos $v = c$ y $e = S_n^1(c, c)$ llegamos a lo que queríamos.
+
+\end{dem}
+\end{solucion}
+
+\begin{ej}{2}
     Demostrar que si $\bm{A}$ es $c.e.$ y $\bm{A} \neq \emptyset$, entonces
     $\bm{A}$ es el rango de una función p.r.
 \end{ej}
@@ -265,27 +313,81 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal qu
 \end{solucion}
 
 \begin{ej}{1}
-    Probar que $\ba \subseteq \mathbb{N}$ es $c.e.$ si y solo si es imagen de
-    una función $p.r.$
-\end{ej}
-
-\begin{ej}{1}
     La clase de funciones computables es una clase $\bm{PRC}$
 \end{ej}
+
+\begin{solucion}
+Tenemos que mostrar que si una funcion es computable entonces podemos llegar por medio de las iniciales o por composición o recursion primitiva.
+En principio tenemos que las iniciales estan  y es facil de ver con programas en $S$:
+
+\begin{itemize}
+\renewcommand\labelitemi{$\sim$}
+\item $n(x) = 0$ es el programa vacio,
+\item $s(x) = x + 1$ es el programa   $Y \leftarrow X + 1  $
+\item $u_i^n(x_1, \dots, x_n) = x_i$ es el programa $Y \leftarrow X_i  $
+\item Composición: $f$, $g_1, \dots, g_k$ parciales computables entonces podemos expresar la composición como el siguiente programa 
+\begin{align*}
+	 & Z_1 \leftarrow g_1(X) \\
+	 & Z_2 \leftarrow g_2(X) \\
+	 & \vdots \\
+	 & Z_k \leftarrow g_k(X) \\
+	 & Y \leftarrow f(Z_1, \cdots, Z_k)
+\end{align*}
+\item Recursión primitiva: $f$, $g_1, \dots, g_k$ parciales computables entonces podemos expresar la recursión primitiva con el siguiente programa 
+\begin{align*}
+	    	  & Y \leftarrow f(X_x, \dots, X_n) \\
+	[C] \quad & \mbox{IF } X = X_{n+1} \mbox{ GOTO } E \\
+			  & Y \leftarrow g(Y, X_1, \dots X_n, T) \\
+			  & T \leftarrow T + 1 \\
+			  & \mbox{ GOTO } C 
+\end{align*}
+\end{itemize}
+
+\noindent Si teniamos funciones parciales computables estos programas muestran que tanto la composición como la recursión primitiva nos da una funcion parcial computable y además como las funciones iniciales son computables tenemos que las funciones computables son una clase $\PRC$
+\end{solucion}
 
 \begin{ej}{1}
     Probar que si $\ba$ y $\bm{B}$ son $c.e.$ entonces también lo son $\ba \cup
     \bm{B}$ y $\ba \cap \bm{B}$.
 \end{ej}
 
+\begin{solucion}
+\noindent Como $\ba$ y $\bb$ son c.e. existe $f$ y $g$ parcial computables tal que 
+	\[ \ba = \dom(f) = \set{x}{f(x) \downarrow} \mbox{ \quad y \quad } 
+	   \bb = \dom(g) = \set{x}{g(x) \downarrow}\] 
+Definimos entonces para la unión
+	\[ h(x) = \twopartdef{\downarrow}{\min\limits_t(\STP(x, f, t) \lor \STP(x, g, t))}
+									 {\uparrow}{\mbox{si no.}} \]
+Y con la misma idea la intersección
+	\[ h(x) = \twopartdef{\downarrow}{f(x) \land g(x)}
+					     {\uparrow}{\mbox{si no.}} \]
+Estas funciones son parcial computables y computan la unión y la intersección.
+\end{solucion}
 
 \begin{ej}{1}
     Exhibir una función computable que no sea $p.r.$ y demostrarlo.
 \end{ej}
 
+\begin{solucion}
+Podemos listar todas las funciones p.r.: $\phi_1, \phi_2, \dots$, entonces definamos la funcion \[ f(x) = \phi_{x}(x) \] esta función devuelve la e-esima funcion p.r. evaluado en su número de programa. Supongamos que $f$ es p.r., entonces también es p.r. (por composición) \[ g(x) = f(x) + 1 \] Pero esto implica que $g$ estaba en la lista de funciones p.r., osea hay un $k$ tal que $\phi_k = g$ de lo cual obtenemos que \[ \phi_k(x) = g(x) = f(x) + 1 = \phi_x(x) + 1 \] Si tomamos $x = k$ llegamos a una contradicción que vino de suponer que $f$ era p.r. 
+\end{solucion}
+
 \begin{ej}{1}
     Enunciar y demostrar el Teorema de punto fijo.
 \end{ej}
+
+\begin{solucion}
+\begin{teo}{}
+Si $\func{f}{\naturals}{\naturals}$ parcial computable entonces existe $e$ tal que $\phi_e = \phi_{f(e)}$
+\end{teo}
+
+\begin{dem}
+Consideremos la función \[ g(x, y) = \phi_{f(x)}(y) \] Si aplicamos el teorema de la recursión tenemos un $e$ tal que \[ g(e, y) = \phi_{e}(y) \] Pero entonces por la definición de $g$ es equivalente a que
+	\[ \phi_{e}(y) = \phi_{f(e)}(y) \]
+\end{dem}
+
+
+\end{solucion}
 
 
 \section*{Lógica Proposicional}
@@ -340,11 +442,41 @@ pero entonces $\bgamma_k$ tampoco es consistente, lo cual contradice nuestra con
 
 \end{solucion}
 
+\begin{ej}{1}
+    $\bgamma \union \{ \lnot\varphi \}$ es inconsistente $\sii \varphi$ es
+    consecuencia sintátctica de $\bgamma$. (En lógica proposicional) 
+\end{ej}
+
+\begin{solucion}
+
+$\Leftarrow$) Como $\bgamma \vdash \varphi$ si agregamos $\lnot\varphi$ tenemos que
+	 \[\grab{\bgamma \cup \pset{\lnot\varphi} \vdash \varphi}
+	 	    {\bgamma \cup \pset{\lnot\varphi} \vdash \lnot\varphi}
+	 	    {\bgamma\cup\pset{\lnot\varphi} \mbox{ es inconsistente.}}\]
+$\Rightarrow$) Como $\bgamma \cup \pset{\lnot\varphi}$ es inconsistente entonces existe un $\psi$ tal que
+\[ \bgamma \cup \pset{\lnot\varphi} \vdash \psi \mbox{\, y \,} \bgamma \cup \pset{\lnot\varphi} \vdash \lnot \psi \]
+Por el teorema de la deducción tenemos que esto es lo mismo que
+\[ \bgamma \vdash \varphi \rightarrow \psi \mbox{\, y \,} \bgamma \vdash \varphi \rightarrow \lnot \psi \]
+Usando el teorema 
+\[ \vdash (\lnot\varphi \rightarrow \psi) \rightarrow ((\lnot\varphi \rightarrow \psi) \rightarrow \varphi) \]
+Si aplicamos MP con lo que obtuvimos del teorema de la deducción obtenemos
+\[ \vdash ((\lnot\varphi \rightarrow \psi) \rightarrow \varphi) \]
+Y si aplicamos MP una vez más
+\[ \varphi \]
+
+
+\end{solucion}
 
 \begin{ej}{1}
     Definir maximal consistente y demostrar que $\varphi$ es teorema de
     $\bgamma$ sii $\varphi \in \bgamma$.
 \end{ej}
+
+\begin{solucion}
+\end{solucion}
+
+
+
 
 \section*{Lógica de primer orden}
 
@@ -413,7 +545,7 @@ como un modelo estandar de la aritmética tiene un modelo infinito, por Löwenhe
     Enunciar y demostrar el teorema de la deducción.
 \end{ej}
 
-\begin{ej}{2}
+\begin{ej}{3}
     Dado $\bm{L}$ un lenguaje de primer oden con igualdad. Decidir si las
     siguientes afirmaciones son verdaderas o falsas.
 
@@ -423,6 +555,10 @@ como un modelo estandar de la aritmética tiene un modelo infinito, por Löwenhe
         \item Existe un conjunto $\bgamma$ tal que $\bgamma \models \ba$ si y
             solo si A tiene universo finito.
         \item El conjunto $\bgamma$ del ítem 1 necesariamente es infinito.
+		\item Dar un conjunto de fórmulas $\bgamma$ tal que $\bgamma$ es valida $\sii$ el
+    	modelo que satisface es infinito.
+    	\item ?`Existe una fórmula $\varphi$ tal que
+    	$\varphi$ es valida $\sii$ el modelo que la satisface es finito? ?`Por qué?
     \end{enumerate}
 
 \end{ej}
@@ -454,22 +590,6 @@ como un modelo estandar de la aritmética tiene un modelo infinito, por Löwenhe
     \end{enumerate}
 
 \end{ej}
-
-\begin{ej}{1}
-    $\bgamma \union \{ \lnot\varphi \}$ es inconsistente $\sii \varphi$ es
-    consecuencia sintátctica de $\bgamma$. (En lógica proposicional) (Dem: Galerazo,
-    teorema de SP, se puede usar o alguno equivalente)
-\end{ej}
-
-\begin{ej}{1}
-    \begin{enumerate}
-    \item Dar un conjunto de fórmulas $\bgamma$ tal que $\bgamma$ es valida $\sii$ el
-    modelo que satisface es infinito.
-    \item ?`Existe una fórmula $\varphi$ tal que
-    $\varphi$ es valida $\sii$ el modelo que la satisface es finito? ?`Por qué?
-    \end{enumerate}
-\end{ej}
-
 
 \begin{ej}{1}
    Enumerar (y explicar brevemente) los pasos de la demostración de completitud
