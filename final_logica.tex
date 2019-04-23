@@ -56,7 +56,7 @@
 \newcommand{\STP}[0]{\mbox{STP}}
 \newcommand{\NTOT}[0]{\bm{\overline{TOT}}}
 \newcommand{\dom}[0]{\mbox{dom}}
-
+\newcommand{\piz}[0]{\psi \rightarrow \zeta}
 \newcounter{excounter}
 
 \newenvironment{solucion}[0]{\begin{adjustwidth}{1.5em}{1.5em}}{\end{adjustwidth}}
@@ -398,6 +398,17 @@ Consideremos la función \[ g(x, y) = \phi_{f(x)}(y) \] Si aplicamos el teorema 
     consistente.
 \end{ej}
 
+\begin{solucion}
+Queremos ver que si $\bgamma$ es satisfacible (existe $v$ tal que $v \models \bgamma$ entonces es consistente. 
+\begin{dem} 
+Supongamos que es inconsistente, entonces existe $\psi$ tal que 
+\[ \bgamma \vdash \psi  \mbox { \, y \, } \bgamma \vdash \lnot\psi \] 
+Pero por correctitud esto significa que
+\[ \bgamma \models \psi \mbox { \, y \, } \bgamma \models \lnot\psi \] 
+Entonces $v \models \psi$ y $v \models \lnot\psi$ lo cual es una contradicción, vino de suponer que $\bgamma$ no era consistente.
+\end{dem}
+\end{solucion}
+
 \begin{ej}{4}
     \begin{enumerate}
     \item Definir consistente, maximal consistente.
@@ -442,6 +453,50 @@ pero entonces $\bgamma_k$ tampoco es consistente, lo cual contradice nuestra con
 
 \end{solucion}
 
+
+\begin{ej}{3}
+    Demostrar que si $\bm{\Gamma}$ es un conjunto de fórmulas de logica proposicional
+    tal que $\bm{\Gamma \subseteq FORM}$ es consistente entonces $\bm{\Gamma}$ es
+    satisfacible.
+\end{ej}
+
+\begin{solucion}
+Supongamos que es consistente, queremos encontrar una valuación que satisface a $\bgamma$, la idea va a venir por construir el conjunto m.c. que extiende a $\bgamma$, definir una valuación que hace verdad al mismo y ver que esa valuación también satisface a $\bgamma$ \\
+
+\begin{dem}
+Sea $\bgamma \subseteq \FORM$ consistente, entonces por el teorema de Lindenbaum podemos extenderlo a un
+ conjunto maximal consistente llamado $\bgamma'$. Definimos entonces la valuacion
+  \[ v(p) = 1  \Leftrightarrow p \in \bgamma' \]
+Veamos que con esta valuación nos alcanza, vamos entonces a demostrar lo siguiente, $v \models \varphi$ sii $\varphi \in \bgamma'$. Lo haremos por inducción en la complejidad de (cantidad de $\lnot$ y $\rightarrow$ que aparecen) $\varphi$.
+
+\noindent \textbf{Caso base:} $\varphi = p$, es trivial por la definición de $v$.
+
+\noindent Recordamos nuestra hipótesis inductiva: Si $\psi$ es una formula con complejidad $\leq n$ entonces \[ v \models \psi \mbox{ \, si y solo si \,} \psi \in \bgamma' \]
+\textbf{Paso inductivo:} Supongamos que tenemos una fórmula $\varphi$ con longitud $n + 1$ entonces o bien
+$\varphi = \lnot \psi$ ó $\varphi = \piz$.\\
+
+\noindent \textbf{Caso $\lnot \psi$:} \\ 
+\noindent $\Rightarrow)$ Si $v \models \varphi$ entonces $v \models \lnot\psi$ de lo cual $v \not\models \psi$, pero entonces la complejidad de $\psi$ es menor que $n + 1$, aplicando la \textbf{HI} tenemos que $\psi \not\in \bgamma'$ y como este es m.c. debe contener a $\lnot\psi$ osea que contiene a $\varphi$. \\
+\noindent $\Leftarrow)$ Si $\lnot\psi \in \bgamma'$ entonces como $\bgamma'$ m.c., $\psi \not\in \bgamma'$, aplicando la \textbf{HI} de vuelta tenemos que $v \not\models \psi$ osea que $v \models \lnot \psi$ y esto es lo mismo que $v \models \varphi$. \\
+
+\noindent \textbf{Caso $\piz$:} \\ 
+\noindent $\Rightarrow)$ Si $v \models \piz$, entonces $v \not\models \psi$ ó $v \models \zeta$, supongamos que pasa lo primero, entonces 
+\[v \not\models \psi \overset{HI}{\implies} \psi \not\in\bgamma' \implies \lnot\psi \in \bgamma' \implies \bgamma' \vdash \lnot\psi \]
+Usando el siguiente teorema $\vdash \lnot\psi \rightarrow (\piz)$ y por $MP$ tenemos $\bgamma \vdash \piz$ entonces $\piz \in \bgamma'$. \\
+Por otro lado tenemos que 
+	\[ v \models \zeta \overset{HI}{\implies} \zeta \in \bgamma' \implies \bgamma' \vdash \zeta \]
+Usando SP1 sabemos que $\vdash \zeta \rightarrow (\piz)$ y aplicando $MP$ entre esto y lo anterior tenemos que $\bgamma' \vdash \piz$, osea que $\piz \in \bgamma'$.\\
+
+\noindent $\Leftarrow)$ Si $v \not\models \piz$ esto pasa si $v \models \psi$ y $v \not\models \zeta$ aplicando la \textbf{HI} tenemos que $\psi \in \bgamma'$ y $\lnot\zeta \in \bgamma'$, osea que 
+\[\bgamma \vdash \lnot\zeta \mbox{\, y \,} \bgamma \vdash \psi\] 
+Usando el siguiente teorema 
+\[ \vdash \psi \rightarrow (\lnot \zeta \rightarrow \lnot(\piz))\]
+y por $MP$ tenemos que
+\[ \lnot\zeta \rightarrow \lnot(\piz)\]
+$MP$ una vez más y obtenemos que $\bgamma' \vdash \lnot(\piz)$. Osea que $\lnot(\piz) \in \bgamma'$, entonces $\piz \not\in \bgamma'$.
+\end{dem}
+\end{solucion}
+
 \begin{ej}{1}
     $\bgamma \union \{ \lnot\varphi \}$ es inconsistente $\sii \varphi$ es
     consecuencia sintátctica de $\bgamma$. (En lógica proposicional) 
@@ -473,6 +528,15 @@ Y si aplicamos MP una vez más
 \end{ej}
 
 \begin{solucion}
+\begin{defi}
+$\bgamma \subseteq \FORM$ es m.c. si es consistente y para toda fórmula $\varphi$ o bien $\varphi \in \bgamma$ o existe un $\psi$ tal que 
+\[\bgamma \cup \pset{\varphi} \vdash \psi \mbox{\, y\, }  \bgamma \cup \pset{\varphi} \vdash \lnot\psi\]
+\end{defi}
+\begin{dem}
+$\Rightarrow)$ $\bgamma \vdash \varphi \implies \bgamma \cup \pset{\lnot\varphi}$ es inconsistente entonces $\varphi \in \bgamma$. \\
+\noindent $\Leftarrow)$ Si $\varphi \in \bgamma $ entonces $\bgamma \vdash \varphi$ por definición. 
+\end{dem}
+
 \end{solucion}
 
 
@@ -534,12 +598,6 @@ Y si aplicamos MP una vez más
 como un modelo estandar de la aritmética tiene un modelo infinito, por Löwenheim-Skolem tiene modelos de cardinalidad arbitraria ($\geq \aleph_0$) entonces un modelo no numerable de los naturales no puede ser estandar.
 
 \end{solucion}
-
-\begin{ej}{3}
-    Demostrar que si $\bm{\Gamma}$ es un conjunto de fórmulas de logica proposicional
-    tal que $\bm{\Gamma \subseteq FORM}$ es consistente entonces $\bm{\Gamma}$ es
-    satisfacible.
-\end{ej}
 
 \begin{ej}{2}
     Enunciar y demostrar el teorema de la deducción.
