@@ -17,6 +17,7 @@
 \usepackage[most]{tcolorbox}
 \usepackage{multicol}
 
+
 \theoremstyle{plain}
 \newtheorem{thm}{Teorema}[chapter]
 \newtheorem{lem}[thm]{Lema}
@@ -57,6 +58,7 @@
 \newcommand{\NTOT}[0]{\bm{\overline{TOT}}}
 \newcommand{\dom}[0]{\mbox{dom}}
 \newcommand{\piz}[0]{\psi \rightarrow \zeta}
+\newcommand{\fis}[0]{\varphi \rightarrow \psi}
 \newcounter{excounter}
 
 \newenvironment{solucion}[0]{\begin{adjustwidth}{1.5em}{1.5em}}{\end{adjustwidth}}
@@ -497,9 +499,53 @@ $MP$ una vez más y obtenemos que $\bgamma' \vdash \lnot(\piz)$. Osea que $\lnot
 \end{dem}
 \end{solucion}
 
+
+\begin{ej}{2}
+    Enunciar y demostrar el teorema de la deducción.
+\end{ej}
+
+\begin{solucion}
+\begin{teo}{} Si $\bgamma \cup \pset{\varphi} \vdash \psi$ entonces $\bgamma \vdash 
+				  \varphi \rightarrow \psi $ \end{teo} \\
+				  
+\begin{dem}
+	Haremos inducción en la longitud de la demostración de $\bgamma \cup \pset{\varphi} \vdash \psi$.\\
+	
+\noindent\textbf{$n = 1$}: tenemos que 3 casos, $\psi \in \bgamma$, $\psi$ es un axioma ó $\psi = p$.
+
+Si $\psi \in \bgamma$ entonces
+
+\begin{align}
+& \psi \\
+& \psi \rightarrow (\varphi \rightarrow \psi) \mbox{ Por SP1 } \\
+& \varphi \rightarrow \psi
+\end{align}
+
+\noindent Si $\psi$ es un axioma entonces, también
+
+\begin{align}
+& \psi \\
+& \psi \rightarrow (\varphi \rightarrow \psi) \mbox{ Por SP1 } \\
+& \varphi \rightarrow \psi
+\end{align}
+
+\noindent Si $\psi = p$ vale el teorema $\vdash p \rightarrow p$.\\
+
+\noindent \textbf{Paso inductivo:} Supongamos que lo probamos hasta $n + 1$ en la longitud de la demostracion
+entonces ahora tenemos 4 casos, 3 son los mismos que ya vimos y se prueban trivialmente, y ahora se agrega un cuarto que es que vale por $MP$. \\
+
+\noindent Si $\psi$ se demuestra por $MP$ a partir de $\varphi_k, \varphi_i = \varphi_k \rightarrow \psi$  \\
+Entonces por \textbf{HI} tenemos que
+ \[ \bgamma \cup \pset{\varphi} \vdash \varphi_k \implies \bgamma \vdash \varphi \rightarrow \varphi_k\]
+ \[ \bgamma \cup \pset{\varphi} \vdash \varphi_i \implies \bgamma \vdash \varphi \rightarrow \varphi_i \implies \bgamma \vdash \varphi \rightarrow (\varphi_k \rightarrow \psi) \]
+Usando el teorema 
+\[\vdash (\varphi \rightarrow (\varphi_k \rightarrow \psi)) \rightarrow ((\varphi \rightarrow \varphi_k) \rightarrow (\fis))\]
+ Aplicando $MP$ dos veces obtenemos $\bgamma \vdash (\varphi \rightarrow \psi)$
+\end{dem}
+\end{solucion}
+
 \begin{ej}{1}
-    $\bgamma \union \{ \lnot\varphi \}$ es inconsistente $\sii \varphi$ es
-    consecuencia sintátctica de $\bgamma$. (En lógica proposicional) 
+    $\bgamma \union \{ \lnot\varphi \}$ es inconsistente $\sii \bgamma \vdash \varphi$. (En lógica proposicional) 
 \end{ej}
 
 \begin{solucion}
@@ -511,20 +557,23 @@ $\Leftarrow$) Como $\bgamma \vdash \varphi$ si agregamos $\lnot\varphi$ tenemos 
 $\Rightarrow$) Como $\bgamma \cup \pset{\lnot\varphi}$ es inconsistente entonces existe un $\psi$ tal que
 \[ \bgamma \cup \pset{\lnot\varphi} \vdash \psi \mbox{\, y \,} \bgamma \cup \pset{\lnot\varphi} \vdash \lnot \psi \]
 Por el teorema de la deducción tenemos que esto es lo mismo que
-\[ \bgamma \vdash \varphi \rightarrow \psi \mbox{\, y \,} \bgamma \vdash \varphi \rightarrow \lnot \psi \]
+\[ \bgamma \vdash \lnot\varphi \rightarrow \psi \mbox{\, y \,} 
+   \bgamma \vdash \lnot\varphi \rightarrow \lnot \psi \]
 Usando el teorema 
 \[ \vdash (\lnot\varphi \rightarrow \psi) \rightarrow ((\lnot\varphi \rightarrow \psi) \rightarrow \varphi) \]
 Si aplicamos MP con lo que obtuvimos del teorema de la deducción obtenemos
 \[ \vdash ((\lnot\varphi \rightarrow \psi) \rightarrow \varphi) \]
 Y si aplicamos MP una vez más
 \[ \varphi \]
-
-
 \end{solucion}
 
-\begin{ej}{1}
-    Definir maximal consistente y demostrar que $\varphi$ es teorema de
-    $\bgamma$ sii $\varphi \in \bgamma$.
+\begin{ej}{2}
+    Definir conjunto maximal consistence. \\
+    Probar que si $\bgamma$ es maximal consistente entonces:
+    \begin{enumerate}
+        \item $\varphi \in \bgamma$ ó (excluyente) $\lnot\varphi \in \bgamma$.
+        \item $\varphi \in \bgamma \sii \bgamma \vdash \varphi$ (consecuencia sintátctica).
+    \end{enumerate}
 \end{ej}
 
 \begin{solucion}
@@ -532,9 +581,17 @@ Y si aplicamos MP una vez más
 $\bgamma \subseteq \FORM$ es m.c. si es consistente y para toda fórmula $\varphi$ o bien $\varphi \in \bgamma$ o existe un $\psi$ tal que 
 \[\bgamma \cup \pset{\varphi} \vdash \psi \mbox{\, y\, }  \bgamma \cup \pset{\varphi} \vdash \lnot\psi\]
 \end{defi}
+
+
+\noindent\textbf{1.} Supongamos que ni $\varphi$ ni $\lnot\varphi$ estan en $\bgamma$, entonces tenemos que como es m.c.
+	\[ \bgamma \cup \pset{\varphi} \mbox{ es inconsistente } \implies \bgamma \vdash \lnot\varphi \]
+	\[ \bgamma \cup \pset{\lnot\varphi} \mbox{ es inconsistente } \implies \bgamma \vdash \varphi \]
+Osea que $\bgamma$ es inconsistente para $\varphi$. Entonces alguno de los 2 tiene que pertenecer. \\
+
+\noindent\textbf{2.}
 \begin{dem}
-$\Rightarrow)$ $\bgamma \vdash \varphi \implies \bgamma \cup \pset{\lnot\varphi}$ es inconsistente entonces $\varphi \in \bgamma$. \\
-\noindent $\Leftarrow)$ Si $\varphi \in \bgamma $ entonces $\bgamma \vdash \varphi$ por definición. 
+$\Rightarrow)$ $\bgamma \vdash \varphi \implies \bgamma \cup \pset{\lnot\varphi}$ es inconsistente entonces $\varphi \in \bgamma$ (Usando el ejercicio anterior). \\
+\noindent $\Leftarrow)$ Si $\varphi \in \bgamma $ entonces $\bgamma \vdash \varphi$ ya que $\varphi$ es axioma o está por consecuencia inmediata. 
 \end{dem}
 
 \end{solucion}
@@ -599,11 +656,7 @@ como un modelo estandar de la aritmética tiene un modelo infinito, por Löwenhe
 
 \end{solucion}
 
-\begin{ej}{2}
-    Enunciar y demostrar el teorema de la deducción.
-\end{ej}
-
-\begin{ej}{3}
+\begin{ej}{4}
     Dado $\bm{L}$ un lenguaje de primer oden con igualdad. Decidir si las
     siguientes afirmaciones son verdaderas o falsas.
 
@@ -611,12 +664,10 @@ como un modelo estandar de la aritmética tiene un modelo infinito, por Löwenhe
         \item Existe un conjunto $\bgamma$ tal que $\bgamma \models \ba$ si  y
             solo si $\ba$ tiene universo infinito.
         \item Existe un conjunto $\bgamma$ tal que $\bgamma \models \ba$ si y
-            solo si A tiene universo finito.
+            solo si $\ba$ tiene universo finito.
         \item El conjunto $\bgamma$ del ítem 1 necesariamente es infinito.
-		\item Dar un conjunto de fórmulas $\bgamma$ tal que $\bgamma$ es valida $\sii$ el
-    	modelo que satisface es infinito.
-    	\item ?`Existe una fórmula $\varphi$ tal que
-    	$\varphi$ es valida $\sii$ el modelo que la satisface es finito? ?`Por qué?
+    	\item ?` $\exists\varphi$ tal que $\bm{M} \models \varphi$ $\sii$ modelo que la satisface es finito? ?`Por qué?
+    	\item  Verdadero o Falso: $\bm{M} \models \varphi \sii \bm{M}$ es infinito.
     \end{enumerate}
 
 \end{ej}
@@ -628,40 +679,8 @@ como un modelo estandar de la aritmética tiene un modelo infinito, por Löwenhe
 \end{ej}
 
 \begin{ej}{1}
-    Sea $\bm{R}$ un conjunto $m.c.$:
-    \begin{enumerate}
-        \item Probar que $\alpha$ pertence a $\bm{R}$ si y solo si $\bm{R}$
-            demuestra $\alpha$.
-        \item Probar que o bien $\alpha \in \bm{R}$ o bien $\lnot\alpha \in
-            \bm{R}$.
-
-    \end{enumerate}
-\end{ej}
-
-\begin{ej}{1}
-    Definir conjunto maximal consistence. \\
-    Probar que si $\bgamma$ es maximal consistente entonces:
-    \begin{enumerate}
-        \item $\varphi \in \bgamma$ ó (excluyente) $\lnot\varphi \in \bgamma$.
-        \item $\varphi \in \bgamma \sii \bgamma \models \varphi$ (consecuencia
-            sintátctica).
-    \end{enumerate}
-
-\end{ej}
-
-\begin{ej}{1}
    Enumerar (y explicar brevemente) los pasos de la demostración de completitud
     en primer orden y mostrar el modelo canónico utilizado en la Demostración.
-\end{ej}
-
-
-\begin{ej}{1}
-    Verdadero o Falso: $\bm{M} \models \varphi \sii \bm{M}$ es infinito.
-\end{ej}
-
-\begin{ej}{1}
-    Demostrar que $\lnot\exists\varphi$ tal que es verdadera $\sii$ tiene modelo
-    finito.
 \end{ej}
 
 \begin{ej}{1}
