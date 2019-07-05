@@ -1,119 +1,6 @@
 \documentclass[leqno, 12pt, twoside,letterpaper]{book}
-\usepackage{makeidx}
-
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}%
-\usepackage{amsthm}
-\usepackage{titlesec}
-\usepackage{amsmath}
-\usepackage{charter}
-\usepackage[bitstream-charter]{mathdesign}
-\usepackage{framed}
-%\usepackage[a4paper]{geometry}
-\usepackage[right=1.1in, left=1.2in]{geometry}
-\usepackage{bm}
-\usepackage{enumitem}
-\usepackage[strict]{changepage}
-\usepackage[most]{tcolorbox}
-\usepackage{multicol}
-
-
-\theoremstyle{plain}
-\newtheorem{thm}{Teorema}[chapter]
-\newtheorem{lem}[thm]{Lema}
-\newtheorem{cor}[thm]{Corolario}
-
-\theoremstyle{definition}
-\newtheorem*{ex}{Ejemplo}
-\newtheorem*{exs}{Ejemplos}
-\newtheorem*{thmx}{Teorema}
-\newtheorem{propi}[thm]{Propiedad}
-\newtheorem{prop}[thm]{Proposición}
-%\newtheorem{ej}[thm]{Ejercicio}
-
-\newtheorem*{notacion}{Notación:}
-
-\newcommand{\va}[1][\mathbb]{#1}
-\newcommand{\prob}[1][\mathbb]{#1}
-\newcommand{\dist}[1][\mathcal]{#1}
-\newcommand{\cond}[2]{\{ #1 \, | \, #2 \}}
-\newcommand{\set}[2]{\{ #1  \mid  #2 \}}
-\newcommand{\pset}[1]{\{ #1 \}}
-\newcommand{\bgamma}[0]{\bm{\Gamma}}
-\newcommand{\ba}[0]{\bm{A}}
-\newcommand{\bb}[0]{\bm{B}}
-\newcommand{\FORM}[0]{\bm{FORM}}
-\newcommand{\naturals}[0]{\mathbb{N}}
-\newcommand{\sii}[0]{\Longleftrightarrow}
-\newcommand{\union}[0]{\cup}
-\newcommand{\class}[1][\mathcal]{#1}
-\newcommand{\PRC}[0]{\bm{PRC}}
-\newcommand{\HALT}[2]{\bm{HALT}(#1, #2)}
-\newcommand{\func}[3]{#1 \colon #2 \to #3}
-\newcommand{\TeoN}[0]{\mbox{Teo}(\mathcal{N})}
-\newcommand{\ARITH}[0]{\mathcal{N}}
-\newcommand{\MODEL}[0]{\mathscr{M}}
-\newcommand{\TOT}[0]{\bm{TOT}}
-\newcommand{\STP}[0]{\mbox{STP}}
-\newcommand{\NTOT}[0]{\bm{\overline{TOT}}}
-\newcommand{\dom}[0]{\mbox{dom}}
-\newcommand{\piz}[0]{\psi \rightarrow \zeta}
-\newcommand{\fis}[0]{\varphi \rightarrow \psi}
-\newcounter{excounter}
-
-\newenvironment{solucion}[0]{\begin{adjustwidth}{1.5em}{1.5em}}{\end{adjustwidth}}
-\newenvironment{teo}[1]{\refstepcounter{thm}\noindent\textbf{Teorema~\thethm  #1:} }{}
-\newenvironment{dem}[0]{\noindent\textbf{Demostración:}}{}
-\newenvironment{defi}[0]{\refstepcounter{thm}\noindent\textbf{Definición:}}{}
-
-\newtcolorbox{exbox}[0]{
-                colback=white!80!gray,
-				colframe=white}
-			
-\newenvironment{ej}[1]{\noindent\stepcounter{excounter} \begin{exbox}\textbf{\arabic{excounter}} (#1).}{\end{exbox}}
-	
-%\newtheorem{ej}{}
-
-\newcommand{\twopartdef}[4]
-{
-	\left\{
-		\begin{array}{ll}
-			#1 & \mbox{si } #2 \\
-			#3 & \mbox{} #4
-		\end{array}
-	\right.
-}
-
-\newcommand{\grab}[3]
-{
-	\left.
-		\begin{array}{ll}
-			#1 & \\
-			#2
-		\end{array}
-	\right\} \implies #3
-}
-
-\newcommand{\twopartdeftwo}[4]
-{
-	\left\{
-		\begin{array}{ll}
-			#1 & \mbox{si } #2 \\
-			\\
-			#3 & \mbox{si } #4
-		\end{array}
-	\right.
-}
-
-\newenvironment{obs}
-  {\begin{framed}}
-  {\end{framed}}
-
-
-
-\titleformat{\chapter}[display]{\normalfont\bfseries}{}{0pt}{\Huge}
-\frenchspacing
-
+\usepackage{notas}
+\usepackage{computability}
 
 \title{Ejercicios para el final de Lógica y Computabilidad.}
 
@@ -203,7 +90,7 @@ $\Rightarrow)$ Sea $\class{C}$ una clase $\PRC$, como $f$ p.r. hay una lista
 \begin{solucion}
 
 $\TOT$ no c.e.: Supongamos que $\TOT$ es c.e., entonces existe una función parcial computable total $f$ cuyo rango es $\TOT$. Existe $e$ tal que $\phi_{e}(x) = \phi_{f(x)}(x) + 1$. Pero entonces $e$ es total por que existe un $k \in \naturals$ tal que $f(k) = e$, entonces
-\[ \phi_{e}(x) = \phi_{f(k)}(x) = \phi_{f(x)}(x) + 1 \] 
+\[ \phi_{e}(x) = \phi_{f(k)}(x) = \phi_{f(x)}(x) + 1 \]
 
 \noindent Si tomamos $x = k$ llegamos a una contradicción, vino de suponer que $\TOT$ es c.e. \\
 
@@ -219,7 +106,7 @@ Definimos el siguiente programa $P$
 \[ \Psi_{p}(x, y) = g(x, y) = \twopartdef{\uparrow}{\phi_x \mbox{ es total.}}
 						 				 {0}{\mbox{si no.}}\]
 \noindent Usando el teorema de la recursión hay un $e$ tal que $\phi_e(y) = g(e, y)$, pero entonces tenemos que para todo y,
- \[ e \in \TOT \implies  \phi_e(y) \uparrow \implies e \not\in \TOT \]  
+ \[ e \in \TOT \implies  \phi_e(y) \uparrow \implies e \not\in \TOT \]
  \[ e \not\in \TOT \implies \phi_e(y) = 0 \implies e \in\TOT \]
 \end{solucion}
 
@@ -285,11 +172,11 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal qu
 \begin{dem}
 	Sea $S_n^1$ la función del teorema del parametro
 	\[ \phi_{S_n^1(e, y)}(x_1, \dots, x_n) = \phi_r(x_1, \dots, x_n, e) \]
-La función \[(x_1, \dots, x_n, v) \mapsto g(S_n^1(v, v), x_1, \dots, x_n)\] 
+La función \[(x_1, \dots, x_n, v) \mapsto g(S_n^1(v, v), x_1, \dots, x_n)\]
 es parcial computable, de modo que existe $c$ tal que
 \begin{align*}
 	g(S_n^1(v, v), x_1, \dots, x_n) &= \phi_c(x_1, \dots, x_n, v)\\
-									&= \phi_{S_n^1(v, c)}(x_1, \dots, x_n) 
+									&= \phi_{S_n^1(v, c)}(x_1, \dots, x_n)
 \end{align*}
 $c$ está fijo, pero $v$ es variable, si elegimos $v = c$ y $e = S_n^1(c, c)$ llegamos a lo que queríamos.
 
@@ -302,16 +189,16 @@ $c$ está fijo, pero $v$ es variable, si elegimos $v = c$ y $e = S_n^1(c, c)$ ll
 \end{ej}
 
 \begin{solucion}
-	Como $A$ es c.e. por definición $A = \set{x}{ g(x) \downarrow}$ donde $\func{g}{\naturals}{\naturals}$ es una función parcial computable, además como $A$ no es vacio por lo menos tiene un elemento $k$. Sea $e$ tal que $\phi_{e} = g$, entonces podemos definir la siguiente funcion, 
+	Como $A$ es c.e. por definición $A = \set{x}{ g(x) \downarrow}$ donde $\func{g}{\naturals}{\naturals}$ es una función parcial computable, además como $A$ no es vacio por lo menos tiene un elemento $k$. Sea $e$ tal que $\phi_{e} = g$, entonces podemos definir la siguiente funcion,
 	\[ f(\langle x, t \rangle) = \twopartdef{x}{\mbox{STP}(\phi_e, t) = 1}{k}{\mbox{si no.}} \]
 \noindent $\func{f}{\naturals}{\naturals}$ es computable (total) y además $f(\naturals) = A$, ya que si $x \in A$ entonces $\phi_e(x) \downarrow$ en algún paso $t$ de la ejecución y por lo tanto $f(\langle x, t \rangle) = x$.
 
 \noindent Queda ver que $f$ es p.r., pero podemos expresar a $f$ como la composición de funciones p.r.
 \[ f(\langle x, t \rangle) = x \, \mbox{STP}(\phi_e, t) \, + \, k \, \alpha(\mbox{STP}(\phi_e, t)) \]
 \noindent ya que la suma, STP, $\alpha$ y los observadores de tuplas son p.r. Recordamos que $\alpha$ es:
-	
-	\[ \alpha(x) = \twopartdef{1}{x = 0.}{0}{\mbox{si } x \neq 0.}\] 
-	
+
+	\[ \alpha(x) = \twopartdef{1}{x = 0.}{0}{\mbox{si } x \neq 0.}\]
+
 \end{solucion}
 
 \begin{ej}{1}
@@ -327,7 +214,7 @@ En principio tenemos que las iniciales estan  y es facil de ver con programas en
 \item $n(x) = 0$ es el programa vacio,
 \item $s(x) = x + 1$ es el programa   $Y \leftarrow X + 1  $
 \item $u_i^n(x_1, \dots, x_n) = x_i$ es el programa $Y \leftarrow X_i  $
-\item Composición: $f$, $g_1, \dots, g_k$ parciales computables entonces podemos expresar la composición como el siguiente programa 
+\item Composición: $f$, $g_1, \dots, g_k$ parciales computables entonces podemos expresar la composición como el siguiente programa
 \begin{align*}
 	 & Z_1 \leftarrow g_1(X) \\
 	 & Z_2 \leftarrow g_2(X) \\
@@ -335,13 +222,13 @@ En principio tenemos que las iniciales estan  y es facil de ver con programas en
 	 & Z_k \leftarrow g_k(X) \\
 	 & Y \leftarrow f(Z_1, \cdots, Z_k)
 \end{align*}
-\item Recursión primitiva: $f$, $g_1, \dots, g_k$ parciales computables entonces podemos expresar la recursión primitiva con el siguiente programa 
+\item Recursión primitiva: $f$, $g_1, \dots, g_k$ parciales computables entonces podemos expresar la recursión primitiva con el siguiente programa
 \begin{align*}
 	    	  & Y \leftarrow f(X_x, \dots, X_n) \\
 	[C] \quad & \mbox{IF } X = X_{n+1} \mbox{ GOTO } E \\
 			  & Y \leftarrow g(Y, X_1, \dots X_n, T) \\
 			  & T \leftarrow T + 1 \\
-			  & \mbox{ GOTO } C 
+			  & \mbox{ GOTO } C
 \end{align*}
 \end{itemize}
 
@@ -354,9 +241,9 @@ En principio tenemos que las iniciales estan  y es facil de ver con programas en
 \end{ej}
 
 \begin{solucion}
-\noindent Como $\ba$ y $\bb$ son c.e. existe $f$ y $g$ parcial computables tal que 
-	\[ \ba = \dom(f) = \set{x}{f(x) \downarrow} \mbox{ \quad y \quad } 
-	   \bb = \dom(g) = \set{x}{g(x) \downarrow}\] 
+\noindent Como $\ba$ y $\bb$ son c.e. existe $f$ y $g$ parcial computables tal que
+	\[ \ba = \dom(f) = \set{x}{f(x) \downarrow} \mbox{ \quad y \quad }
+	   \bb = \dom(g) = \set{x}{g(x) \downarrow}\]
 Definimos entonces para la unión
 	\[ h(x) = \twopartdef{\downarrow}{\min\limits_t(\STP(x, f, t) \lor \STP(x, g, t))}
 									 {\uparrow}{\mbox{si no.}} \]
@@ -371,7 +258,7 @@ Estas funciones son parcial computables y computan la unión y la intersección.
 \end{ej}
 
 \begin{solucion}
-Podemos listar todas las funciones p.r.: $\phi_1, \phi_2, \dots$, entonces definamos la funcion \[ f(x) = \phi_{x}(x) \] esta función devuelve la e-esima funcion p.r. evaluado en su número de programa. Supongamos que $f$ es p.r., entonces también es p.r. (por composición) \[ g(x) = f(x) + 1 \] Pero esto implica que $g$ estaba en la lista de funciones p.r., osea hay un $k$ tal que $\phi_k = g$ de lo cual obtenemos que \[ \phi_k(x) = g(x) = f(x) + 1 = \phi_x(x) + 1 \] Si tomamos $x = k$ llegamos a una contradicción que vino de suponer que $f$ era p.r. 
+Podemos listar todas las funciones p.r.: $\phi_1, \phi_2, \dots$, entonces definamos la funcion \[ f(x) = \phi_{x}(x) \] esta función devuelve la e-esima funcion p.r. evaluado en su número de programa. Supongamos que $f$ es p.r., entonces también es p.r. (por composición) \[ g(x) = f(x) + 1 \] Pero esto implica que $g$ estaba en la lista de funciones p.r., osea hay un $k$ tal que $\phi_k = g$ de lo cual obtenemos que \[ \phi_k(x) = g(x) = f(x) + 1 = \phi_x(x) + 1 \] Si tomamos $x = k$ llegamos a una contradicción que vino de suponer que $f$ era p.r.
 \end{solucion}
 
 \begin{ej}{1}
@@ -401,12 +288,12 @@ Consideremos la función \[ g(x, y) = \phi_{f(x)}(y) \] Si aplicamos el teorema 
 \end{ej}
 
 \begin{solucion}
-Queremos ver que si $\bgamma$ es satisfacible (existe $v$ tal que $v \models \bgamma$ entonces es consistente. 
-\begin{dem} 
-Supongamos que es inconsistente, entonces existe $\psi$ tal que 
-\[ \bgamma \vdash \psi  \mbox { \, y \, } \bgamma \vdash \lnot\psi \] 
+Queremos ver que si $\bgamma$ es satisfacible (existe $v$ tal que $v \models \bgamma$ entonces es consistente.
+\begin{dem}
+Supongamos que es inconsistente, entonces existe $\psi$ tal que
+\[ \bgamma \vdash \psi  \mbox { \, y \, } \bgamma \vdash \lnot\psi \]
 Pero por correctitud esto significa que
-\[ \bgamma \models \psi \mbox { \, y \, } \bgamma \models \lnot\psi \] 
+\[ \bgamma \models \psi \mbox { \, y \, } \bgamma \models \lnot\psi \]
 Entonces $v \models \psi$ y $v \models \lnot\psi$ lo cual es una contradicción, vino de suponer que $\bgamma$ no era consistente.
 \end{dem}
 \end{solucion}
@@ -433,7 +320,7 @@ Entonces $v \models \psi$ y $v \models \lnot\psi$ lo cual es una contradicción,
 \begin{itemize}
 \renewcommand\labelitemi{$\sim$}
 \item $\bgamma_0 = \bgamma$
-\item $\bgamma_{n+1} = 
+\item $\bgamma_{n+1} =
 	\twopartdef{\bgamma_n \cup \{\varphi_{n + 1}\}}{\bgamma_n \cup \{\varphi_{n + 1}\} \mbox{es consistente.}}
 			   {\bgamma_n}{\mbox{si no.}}$
 \item $\bgamma' = \bigcup\limits_{k \geq 0} \bgamma_k$
@@ -441,16 +328,16 @@ Entonces $v \models \psi$ y $v \models \lnot\psi$ lo cual es una contradicción,
 
 \noindent Entonces afirmamos que $\bgamma'$ es m.c.
 
-\noindent \textbf{Consistencia:} Supongamos que no lo es, entonces hay una formula $\psi$ tal que 
+\noindent \textbf{Consistencia:} Supongamos que no lo es, entonces hay una formula $\psi$ tal que
 \[\bgamma \vdash \psi \mbox{ \, y \, } \bgamma \vdash \lnot \psi\]
 
 \noindent Pero esto significa que en sus derivaciones hay un número finito de fórmulas
 \[\{\gamma_1, \gamma_2, \cdots, \gamma_n\} \subseteq \bgamma'\]
-\noindent Por lo tanto hay un $k$ lo suficientemente grande tal que 
+\noindent Por lo tanto hay un $k$ lo suficientemente grande tal que
 \[\{\gamma_1, \gamma_2, \cdots, \gamma_n\} \subseteq \bgamma_k\]
 pero entonces $\bgamma_k$ tampoco es consistente, lo cual contradice nuestra construcción.\\
- 
-\noindent\textbf{Maximal:} La maximalidad significa que dada una fórmula $\varphi$ o bien $\varphi \in \bgamma'$ ó si se la agregamos a $\bgamma'$ se hace inconsistente. \\ 
+
+\noindent\textbf{Maximal:} La maximalidad significa que dada una fórmula $\varphi$ o bien $\varphi \in \bgamma'$ ó si se la agregamos a $\bgamma'$ se hace inconsistente. \\
 \noindent Entonces supongamos que $\varphi \not\in \bgamma'$. Tenemos que $\varphi$ debe aparecer en la numeración que hicimos sobre todas las fórmulas, por ejemplo en $\varphi_n$, pero entonces deberíamos haberla agregado en $\bgamma_n$, de lo cual tenemos que $\varphi_n \not\in \bgamma_n$ por lo tanto $\bgamma_{n - 1} \cup \varphi_n$ es inconsistente, de lo cual tenemos que $\bgamma' \cup \varphi_n$ es inconsistente.
 
 \end{solucion}
@@ -477,21 +364,21 @@ Veamos que con esta valuación nos alcanza, vamos entonces a demostrar lo siguie
 \textbf{Paso inductivo:} Supongamos que tenemos una fórmula $\varphi$ con longitud $n + 1$ entonces o bien
 $\varphi = \lnot \psi$ ó $\varphi = \piz$.\\
 
-\noindent \textbf{Caso $\lnot \psi$:} \\ 
+\noindent \textbf{Caso $\lnot \psi$:} \\
 \noindent $\Rightarrow)$ Si $v \models \varphi$ entonces $v \models \lnot\psi$ de lo cual $v \not\models \psi$, pero entonces la complejidad de $\psi$ es menor que $n + 1$, aplicando la \textbf{HI} tenemos que $\psi \not\in \bgamma'$ y como este es m.c. debe contener a $\lnot\psi$ osea que contiene a $\varphi$. \\
 \noindent $\Leftarrow)$ Si $\lnot\psi \in \bgamma'$ entonces como $\bgamma'$ m.c., $\psi \not\in \bgamma'$, aplicando la \textbf{HI} de vuelta tenemos que $v \not\models \psi$ osea que $v \models \lnot \psi$ y esto es lo mismo que $v \models \varphi$. \\
 
-\noindent \textbf{Caso $\piz$:} \\ 
-\noindent $\Rightarrow)$ Si $v \models \piz$, entonces $v \not\models \psi$ ó $v \models \zeta$, supongamos que pasa lo primero, entonces 
+\noindent \textbf{Caso $\piz$:} \\
+\noindent $\Rightarrow)$ Si $v \models \piz$, entonces $v \not\models \psi$ ó $v \models \zeta$, supongamos que pasa lo primero, entonces
 \[v \not\models \psi \overset{HI}{\implies} \psi \not\in\bgamma' \implies \lnot\psi \in \bgamma' \implies \bgamma' \vdash \lnot\psi \]
 Usando el siguiente teorema $\vdash \lnot\psi \rightarrow (\piz)$ y por $MP$ tenemos $\bgamma \vdash \piz$ entonces $\piz \in \bgamma'$. \\
-Por otro lado tenemos que 
+Por otro lado tenemos que
 	\[ v \models \zeta \overset{HI}{\implies} \zeta \in \bgamma' \implies \bgamma' \vdash \zeta \]
 Usando SP1 sabemos que $\vdash \zeta \rightarrow (\piz)$ y aplicando $MP$ entre esto y lo anterior tenemos que $\bgamma' \vdash \piz$, osea que $\piz \in \bgamma'$.\\
 
-\noindent $\Leftarrow)$ Si $v \not\models \piz$ esto pasa si $v \models \psi$ y $v \not\models \zeta$ aplicando la \textbf{HI} tenemos que $\psi \in \bgamma'$ y $\lnot\zeta \in \bgamma'$, osea que 
-\[\bgamma \vdash \lnot\zeta \mbox{\, y \,} \bgamma \vdash \psi\] 
-Usando el siguiente teorema 
+\noindent $\Leftarrow)$ Si $v \not\models \piz$ esto pasa si $v \models \psi$ y $v \not\models \zeta$ aplicando la \textbf{HI} tenemos que $\psi \in \bgamma'$ y $\lnot\zeta \in \bgamma'$, osea que
+\[\bgamma \vdash \lnot\zeta \mbox{\, y \,} \bgamma \vdash \psi\]
+Usando el siguiente teorema
 \[ \vdash \psi \rightarrow (\lnot \zeta \rightarrow \lnot(\piz))\]
 y por $MP$ tenemos que
 \[ \lnot\zeta \rightarrow \lnot(\piz)\]
@@ -505,12 +392,12 @@ $MP$ una vez más y obtenemos que $\bgamma' \vdash \lnot(\piz)$. Osea que $\lnot
 \end{ej}
 
 \begin{solucion}
-\begin{teo}{} Si $\bgamma \cup \pset{\varphi} \vdash \psi$ entonces $\bgamma \vdash 
+\begin{teo}{} Si $\bgamma \cup \pset{\varphi} \vdash \psi$ entonces $\bgamma \vdash
 				  \varphi \rightarrow \psi $ \end{teo} \\
-				  
+
 \begin{dem}
 	Haremos inducción en la longitud de la demostración de $\bgamma \cup \pset{\varphi} \vdash \psi$.\\
-	
+
 \noindent\textbf{$n = 1$}: tenemos que 3 casos, $\psi \in \bgamma$, $\psi$ es un axioma ó $\psi = p$.
 
 Si $\psi \in \bgamma$ entonces
@@ -538,14 +425,14 @@ entonces ahora tenemos 4 casos, 3 son los mismos que ya vimos y se prueban trivi
 Entonces por \textbf{HI} tenemos que
  \[ \bgamma \cup \pset{\varphi} \vdash \varphi_k \implies \bgamma \vdash \varphi \rightarrow \varphi_k\]
  \[ \bgamma \cup \pset{\varphi} \vdash \varphi_i \implies \bgamma \vdash \varphi \rightarrow \varphi_i \implies \bgamma \vdash \varphi \rightarrow (\varphi_k \rightarrow \psi) \]
-Usando el teorema 
+Usando el teorema
 \[\vdash (\varphi \rightarrow (\varphi_k \rightarrow \psi)) \rightarrow ((\varphi \rightarrow \varphi_k) \rightarrow (\fis))\]
  Aplicando $MP$ dos veces obtenemos $\bgamma \vdash (\varphi \rightarrow \psi)$
 \end{dem}
 \end{solucion}
 
 \begin{ej}{1}
-    $\bgamma \union \{ \lnot\varphi \}$ es inconsistente $\sii \bgamma \vdash \varphi$. (En lógica proposicional) 
+    $\bgamma \union \{ \lnot\varphi \}$ es inconsistente $\sii \bgamma \vdash \varphi$. (En lógica proposicional)
 \end{ej}
 
 \begin{solucion}
@@ -557,9 +444,9 @@ $\Leftarrow$) Como $\bgamma \vdash \varphi$ si agregamos $\lnot\varphi$ tenemos 
 $\Rightarrow$) Como $\bgamma \cup \pset{\lnot\varphi}$ es inconsistente entonces existe un $\psi$ tal que
 \[ \bgamma \cup \pset{\lnot\varphi} \vdash \psi \mbox{\, y \,} \bgamma \cup \pset{\lnot\varphi} \vdash \lnot \psi \]
 Por el teorema de la deducción tenemos que esto es lo mismo que
-\[ \bgamma \vdash \lnot\varphi \rightarrow \psi \mbox{\, y \,} 
+\[ \bgamma \vdash \lnot\varphi \rightarrow \psi \mbox{\, y \,}
    \bgamma \vdash \lnot\varphi \rightarrow \lnot \psi \]
-Usando el teorema 
+Usando el teorema
 \[ \vdash (\lnot\varphi \rightarrow \psi) \rightarrow ((\lnot\varphi \rightarrow \psi) \rightarrow \varphi) \]
 Si aplicamos MP con lo que obtuvimos del teorema de la deducción obtenemos
 \[ \vdash ((\lnot\varphi \rightarrow \psi) \rightarrow \varphi) \]
@@ -578,7 +465,7 @@ Y si aplicamos MP una vez más
 
 \begin{solucion}
 \begin{defi}
-$\bgamma \subseteq \FORM$ es m.c. si es consistente y para toda fórmula $\varphi$ o bien $\varphi \in \bgamma$ o existe un $\psi$ tal que 
+$\bgamma \subseteq \FORM$ es m.c. si es consistente y para toda fórmula $\varphi$ o bien $\varphi \in \bgamma$ o existe un $\psi$ tal que
 \[\bgamma \cup \pset{\varphi} \vdash \psi \mbox{\, y\, }  \bgamma \cup \pset{\varphi} \vdash \lnot\psi\]
 \end{defi}
 
@@ -591,7 +478,7 @@ Osea que $\bgamma$ es inconsistente para $\varphi$. Entonces alguno de los 2 tie
 \noindent\textbf{2.}
 \begin{dem}
 $\Rightarrow)$ $\bgamma \vdash \varphi \implies \bgamma \cup \pset{\lnot\varphi}$ es inconsistente entonces $\varphi \in \bgamma$ (Usando el ejercicio anterior). \\
-\noindent $\Leftarrow)$ Si $\varphi \in \bgamma $ entonces $\bgamma \vdash \varphi$ ya que $\varphi$ es axioma o está por consecuencia inmediata. 
+\noindent $\Leftarrow)$ Si $\varphi \in \bgamma $ entonces $\bgamma \vdash \varphi$ ya que $\varphi$ es axioma o está por consecuencia inmediata.
 \end{dem}
 
 \end{solucion}
