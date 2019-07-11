@@ -1,9 +1,9 @@
 LATEX_FLAGS = -output-directory=build
 
-all: final_logica.pdf
+all: notas_final_logica_y_computabilidad.pdf
 
-%.pdf: final_logica.tex
-	latexmk -pdf -jobname=build/notas_final_logica.pdf $<
+%.pdf: notas_final_logica_y_computabilidad.tex
+	latexmk -pdf -jobname=build/notas_final_logica_y_computabilidad.pdf $<
 
 clean:
 	rm -f build/*

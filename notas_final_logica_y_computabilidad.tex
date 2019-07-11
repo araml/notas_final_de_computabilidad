@@ -1,13 +1,14 @@
 \documentclass[leqno, 12pt, twoside,letterpaper]{book}
 \usepackage{packages/notas}
 \usepackage{packages/computability}
-
+\usepackage{makeidx}
+\makeindex
 \title{Ejercicios para el final de Lógica y Computabilidad.}
 
 \begin{document}
-
 \maketitle
-\section*{Computabilidad}
+\tableofcontents
+\chapter{Computabilidad}
 
 \begin{ej}{13}
     Resolver los siguientes puntos:
@@ -19,7 +20,8 @@
 \end{ej}
 
 \begin{solucion}
-\textbf{1.} Sea $\class{C}$ una clase de funciónes parciales computables. Entonces el conjunto de índices $A$ se define como
+\index{Clase de funciones parciales computables}
+\textbf{1.} Sea $\class{C}$ una clase de funciones parciales computables. Entonces el conjunto de índices $A$ se define como
 \[
 	A = \set{x}{\phi_{x} \in \class{C}}
 \]
@@ -27,6 +29,7 @@ Notar que si $x \neq y$, $x \in A\,$ y $\,\phi_{x} = \phi_{y}$ entonces $y \in A
 
 \noindent\textbf{2.}
 
+\index{Rice, Teorema de}
 \begin{teo}{ (Rice)}Sea $A$ un conjunto de índices, entonces si $A \neq \emptyset$ ó $A \neq \naturals$ entonces $A$ no es computable. Es decir si $A$ no es un conjunto trivial entonces no es computable.
 \end{teo}
 
@@ -62,6 +65,7 @@ Notar que si $x \neq y$, $x \in A\,$ y $\,\phi_{x} = \phi_{y}$ entonces $y \in A
 \end{dem}
 \end{solucion}
 
+\index{Función primitiva recursiva}
 \begin{ej}{5}
     Demostrar que una función es $p.r.$ si y solo si pertenece a toda clase
     $\PRC$
@@ -82,7 +86,7 @@ $\Rightarrow)$ Sea $\class{C}$ una clase $\PRC$, como $f$ p.r. hay una lista
 \noindent $\Leftarrow)$ Las funciones p.r. son una clase $\PRC$ en particular si $f$ pertenece a toda clase $\PRC$ tiene que pertenecer a la clase de las funciones p.r., osea que $f$ es p.r.
 \end{dem}
 \end{solucion}
-
+\index{TOT}
 \begin{ej}{4}
     Probar que $\bm{TOT}$ no es $c.e.$ ni $co-c.e.$
 \end{ej}
@@ -109,15 +113,17 @@ Definimos el siguiente programa $P$
  \[ e \in \TOT \implies  \phi_e(y) \uparrow \implies e \not\in \TOT \]
  \[ e \not\in \TOT \implies \phi_e(y) = 0 \implies e \in\TOT \]
 \end{solucion}
-
+\index{Halting problem}
 \begin{ej}{3}
     Enunciar el halting problem y demostrar que $\HALT{x}{y}$ no es computable.
 \end{ej}
 
 \begin{solucion}
-\noindent $\func{\HALT{x}{y}}{\naturals^2}{\{0, 1\}} $ es la funcion que devuelve verdadero si el programa $x$ con entrada $y$ no se indefine:
+\noindent $\func{\HALT{x}{y}}{\naturals^2}{\{0, 1\}} $ es la funcion que
+    devuelve verdadero si el programa $\bm{x}$ con la entrada $\bm{y}$ termina,
+    osea la función:
 
-	\[ \HALT{x}{y} = \twopartdef{1}{\psi_{P}(x) \downarrow}{0}{\mbox{si no.}}\]
+	\[ \HALT{x}{y} = \twopartdef{1}{\psi_{x}(y) \downarrow}{0}{\mbox{si no.}}\]
 
 \noindent El halting problem resulta de saber si esta función es o no computable. \\
 
@@ -158,7 +164,7 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal qu
 
 \noindent Esta función, a pesar de tener una minimización no acotada es total y devuelve true si la aparición de $x$ esta en $\ba$.
 \end{solucion}
-
+\index{Teorema de la recursión}
 \begin{ej}{2}
     Enunciar y demostrar el teorema de la recursión (Hint: Teorema del parámetro).
 \end{ej}
@@ -279,7 +285,7 @@ Consideremos la función \[ g(x, y) = \phi_{f(x)}(y) \] Si aplicamos el teorema 
 \end{solucion}
 
 
-\section*{Lógica Proposicional}
+\chapter{Lógica Proposicional}
 
 \begin{ej}{5}
     Usando el teorema de correctitud de la lógica proposicional, probar que
@@ -486,7 +492,7 @@ $\Rightarrow)$ $\bgamma \vdash \varphi \implies \bgamma \cup \pset{\lnot\varphi}
 
 
 
-\section*{Lógica de primer orden}
+\chapter{Lógica de primer orden}
 
 \begin{ej}{8}
     Sea $\bm{\mathcal{L}} = \{0, S, <, +, *\}$ con igualdad y sea
@@ -589,4 +595,6 @@ como un modelo estandar de la aritmética tiene un modelo infinito, por Löwenhe
     \end{enumerate}
 \end{ej}
 
+
+\printindex
 \end{document}
