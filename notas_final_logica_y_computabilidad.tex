@@ -2,6 +2,21 @@
 \usepackage{packages/notas}
 \usepackage{packages/computability}
 \usepackage{makeidx}
+
+
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=red,
+    linktoc=all,
+    linktocpage=true
+}
+
+
+\newcommand{\addtotoc}[1]{\phantomsection \addcontentsline{toc}{section}{#1}}
+
 \makeindex
 \title{Ejercicios para el final de Lógica y Computabilidad.}
 
@@ -29,6 +44,7 @@ Notar que si $x \neq y$, $x \in A\,$ y $\,\phi_{x} = \phi_{y}$ entonces $y \in A
 
 \noindent\textbf{2.}
 
+\addtotoc{Demostrar el teorema de Rice}
 \index{Rice, Teorema de}
 \begin{teo}{ (Rice)}Sea $A$ un conjunto de índices, entonces si $A \neq \emptyset$ ó $A \neq \naturals$ entonces $A$ no es computable. Es decir si $A$ no es un conjunto trivial entonces no es computable.
 \end{teo}
@@ -65,6 +81,8 @@ Notar que si $x \neq y$, $x \in A\,$ y $\,\phi_{x} = \phi_{y}$ entonces $y \in A
 \end{dem}
 \end{solucion}
 
+\addtotoc{Demostrar que una función es $p.r.$ si y solo si
+pertenece a toda clase $\PRC$}
 \index{Función primitiva recursiva}
 \begin{ej}{5}
     Demostrar que una función es $p.r.$ si y solo si pertenece a toda clase
@@ -87,24 +105,30 @@ $\Rightarrow)$ Sea $\class{C}$ una clase $\PRC$, como $f$ p.r. hay una lista
 \end{dem}
 \end{solucion}
 \index{TOT}
+\addtotoc{Probar que $\TOT$ no es $c.e.$ ni $co-c.e.$}
 \begin{ej}{4}
-    Probar que $\bm{TOT}$ no es $c.e.$ ni $co-c.e.$
+    Probar que $\TOT$ no es $c.e.$ ni $co-c.e.$
 \end{ej}
 
 \begin{solucion}
 
-$\TOT$ no c.e.: Supongamos que $\TOT$ es c.e., entonces existe una función parcial computable total $f$ cuyo rango es $\TOT$. Existe $e$ tal que $\phi_{e}(x) = \phi_{f(x)}(x) + 1$. Pero entonces $e$ es total por que existe un $k \in \naturals$ tal que $f(k) = e$, entonces
+\textbf{$\TOT$ no c.e.:} Supongamos que $\TOT$ es c.e., entonces existe una función
+parcial computable total $f$ cuyo rango es $\TOT$. Existe $e$ tal que
+$\phi_{e}(x) = \phi_{f(x)}(x) + 1$. Pero entonces $e$ es total por que existe
+un $k \in \naturals$ tal que $f(k) = e$, entonces
 \[ \phi_{e}(x) = \phi_{f(k)}(x) = \phi_{f(x)}(x) + 1 \]
 
-\noindent Si tomamos $x = k$ llegamos a una contradicción, vino de suponer que $\TOT$ es c.e. \\
+\noindent Si tomamos $x = k$ llegamos a una contradicción, vino de suponer que
+$\TOT$ era c.e. \\
 
-\noindent $\NTOT$ no es c.e.: \[\NTOT = \set{x}{\phi_x \mbox{no es total}}\]
-Supongamos que $\NTOT$ es c.e., existe un $e$ tal que $\mbox{dom}(\phi_{e}) = \NTOT$.
-Definimos el siguiente programa $P$
+\noindent \textbf{$\NTOT$ no es c.e.:}
+    \[\NTOT = \set{x}{\phi_x \mbox{no es total}}\]
+Supongamos que $\NTOT$ es c.e., existe un $e$ tal que
+$\mbox{dom}(\phi_{e}) = \NTOT$. Definimos el siguiente programa $P$
 \begin{align*}
-	[C] \quad & \mbox{IF STP}(x, e, t) = 1 \mbox{ GOTO E} \\
-		\quad & T \leftarrow T + 1 \\
-		\quad & \mbox{GOTO C}
+    [C] \quad & \mbox{IF STP}(x, e, t) = 1 \mbox{ GOTO E} \\
+        \quad & T \leftarrow T + 1 \\
+        \quad & \mbox{GOTO C}
 \end{align*}
 \noindent Como $\NTOT = \mbox{dom}(\phi_e)$, este programa se indefine solo si $x$ es el número de un programa total computable. En otras palabras $P$ es equivalente a
 \[ \Psi_{p}(x, y) = g(x, y) = \twopartdef{\uparrow}{\phi_x \mbox{ es total.}}
@@ -114,6 +138,8 @@ Definimos el siguiente programa $P$
  \[ e \not\in \TOT \implies \phi_e(y) = 0 \implies e \in\TOT \]
 \end{solucion}
 \index{Halting problem}
+\addtotoc{Demostrar que el halting problem no es
+computable}
 \begin{ej}{3}
     Enunciar el halting problem y demostrar que $\HALT{x}{y}$ no es computable.
 \end{ej}
@@ -142,6 +168,8 @@ Definimos el siguiente programa $P$
 \end{dem}
 \end{solucion}
 
+\addtotoc{$\ba \subseteq \naturals$ es computable $\sii$
+$\ba$ y $\bar{\ba}$ son computables enumerables}
 \begin{ej}{2}
     $\ba \subseteq \naturals$ es computable $\sii$ $\ba$ y $\bar{\ba}$ son
     computablemente enumerables.
@@ -164,6 +192,7 @@ $\Rightarrow)$	Si $\ba$ es computable existe $c$ computable (?`Por qué?) tal qu
 
 \noindent Esta función, a pesar de tener una minimización no acotada es total y devuelve true si la aparición de $x$ esta en $\ba$.
 \end{solucion}
+\addtotoc{Teorema de la recursión}
 \index{Teorema de la recursión}
 \begin{ej}{2}
     Enunciar y demostrar el teorema de la recursión (Hint: Teorema del parámetro).
@@ -189,9 +218,11 @@ $c$ está fijo, pero $v$ es variable, si elegimos $v = c$ y $e = S_n^1(c, c)$ ll
 \end{dem}
 \end{solucion}
 
+\addtotoc{Demostrar que si $\ba$ es $c.e.$ y $\ba
+\neq \emptyset$, entonces $\ba$ es el rango de una función p.r.}
 \begin{ej}{2}
-    Demostrar que si $\bm{A}$ es $c.e.$ y $\bm{A} \neq \emptyset$, entonces
-    $\bm{A}$ es el rango de una función p.r.
+    Demostrar que si $\ba$ es $c.e.$ y $\ba \neq \emptyset$, entonces
+    $\ba$ es el rango de una función p.r.
 \end{ej}
 
 \begin{solucion}
@@ -207,8 +238,10 @@ $c$ está fijo, pero $v$ es variable, si elegimos $v = c$ y $e = S_n^1(c, c)$ ll
 
 \end{solucion}
 
+\addtotoc{La clase de funciones computables es una clase
+$\PRC$}
 \begin{ej}{1}
-    La clase de funciones computables es una clase $\bm{PRC}$
+    La clase de funciones computables es una clase $\PRC$
 \end{ej}
 
 \begin{solucion}
@@ -241,34 +274,39 @@ En principio tenemos que las iniciales estan  y es facil de ver con programas en
 \noindent Si teniamos funciones parciales computables estos programas muestran que tanto la composición como la recursión primitiva nos da una funcion parcial computable y además como las funciones iniciales son computables tenemos que las funciones computables son una clase $\PRC$
 \end{solucion}
 
+\addtotoc{Probar que si $\ba$ y $\bb$ son $c.e.$
+entonces también lo son $\ba \cup \bb$ y $\ba \cap \bb$}
+
 \begin{ej}{1}
-    Probar que si $\ba$ y $\bm{B}$ son $c.e.$ entonces también lo son $\ba \cup
-    \bm{B}$ y $\ba \cap \bm{B}$.
+    Probar que si $\ba$ y $\bb$ son $c.e.$ entonces también lo son $\ba \cup
+    \bb$ y $\ba \cap \bb$.
 \end{ej}
 
 \begin{solucion}
 \noindent Como $\ba$ y $\bb$ son c.e. existe $f$ y $g$ parcial computables tal que
-	\[ \ba = \dom(f) = \set{x}{f(x) \downarrow} \mbox{ \quad y \quad }
-	   \bb = \dom(g) = \set{x}{g(x) \downarrow}\]
+  \[ \ba = \dom(f) = \set{x}{f(x) \downarrow} \mbox{ \quad y \quad }
+     \bb = \dom(g) = \set{x}{g(x) \downarrow}\]
 Definimos entonces para la unión
-	\[ h(x) = \twopartdef{\downarrow}{\min\limits_t(\STP(x, f, t) \lor \STP(x, g, t))}
-									 {\uparrow}{\mbox{si no.}} \]
+  \[ h(x) = \twopartdef{\downarrow}{\min\limits_t(\STP(x, f, t) \lor \STP(x, g, t))}
+                   {\uparrow}{\mbox{si no.}} \]
 Y con la misma idea la intersección
-	\[ h(x) = \twopartdef{\downarrow}{f(x) \land g(x)}
-					     {\uparrow}{\mbox{si no.}} \]
+  \[ h(x) = \twopartdef{\downarrow}{f(x) \land g(x)}
+               {\uparrow}{\mbox{si no.}} \]
 Estas funciones son parcial computables y computan la unión y la intersección.
 \end{solucion}
 
+\addtotoc{Demostrar la existencia de una funcion computable que no sea $p.r.$}
 \begin{ej}{1}
-    Exhibir una función computable que no sea $p.r.$ y demostrarlo.
+    Demostrar la existencia de una función computable que no sea $p.r.$.
 \end{ej}
 
 \begin{solucion}
 Podemos listar todas las funciones p.r.: $\phi_1, \phi_2, \dots$, entonces definamos la funcion \[ f(x) = \phi_{x}(x) \] esta función devuelve la e-esima funcion p.r. evaluado en su número de programa. Supongamos que $f$ es p.r., entonces también es p.r. (por composición) \[ g(x) = f(x) + 1 \] Pero esto implica que $g$ estaba en la lista de funciones p.r., osea hay un $k$ tal que $\phi_k = g$ de lo cual obtenemos que \[ \phi_k(x) = g(x) = f(x) + 1 = \phi_x(x) + 1 \] Si tomamos $x = k$ llegamos a una contradicción que vino de suponer que $f$ era p.r.
 \end{solucion}
 
+\addtotoc{Teorema del punto fijo}
 \begin{ej}{1}
-    Enunciar y demostrar el Teorema de punto fijo.
+    Enunciar y demostrar el Teorema del punto fijo.
 \end{ej}
 
 \begin{solucion}
@@ -287,10 +325,11 @@ Consideremos la función \[ g(x, y) = \phi_{f(x)}(y) \] Si aplicamos el teorema 
 
 \chapter{Lógica Proposicional}
 
+\addtotoc{Usando el teorema de correctitud de lógica proposicional, probar que
+si $\bgamma$ es un conjunto de fórmulas satisfacible entonces es consistente.}
 \begin{ej}{5}
-    Usando el teorema de correctitud de la lógica proposicional, probar que
-    $\bm{\Gamma}$ es un conjunto de fórmulas satisfacible entonces es
-    consistente.
+ Usando el teorema de correctitud de la lógica proposicional, probar que si
+ $\bm{\Gamma}$ es un conjunto de fórmulas satisfacible entonces es consistente.
 \end{ej}
 
 \begin{solucion}
